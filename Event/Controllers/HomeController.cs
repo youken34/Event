@@ -23,20 +23,24 @@ public class HomeController : Controller
     }
 
     [HttpPost]
-    public IActionResult Create(Event model)
-{
-    Console.WriteLine($"New event created: ");
-
-    // retrieve the form data
-    var title = Request.Form["Title"];
-    var description = Request.Form["Description"];
-    var category = Request.Form["Category"];
-    var location = Request.Form["Location"];
-    var dateEvent = DateTime.Parse(Request.Form["DateEvent"]);
-
-    // create a new instance of the EventModel class
-    var eventModel = new Event(title, description, category, location, dateEvent);
-    return View("ListEvent");
+    public IActionResult Create()
+    {
+        // create a new instance of the EventModel class
+        if (!(String.IsNullOrEmpty(Request.Form["Title"]) ||
+            String.IsNullOrEmpty(Request.Form["Description"]) ||
+            String.IsNullOrEmpty(Request.Form["Category"]) ||
+            String.IsNullOrEmpty(Request.Form["Location"]) ||
+            Request.Form["DateEvent"].GetType() == typeof(DateTime)))
+        {
+            // retrieve the form data
+            var title = Request.Form["Title"].ToString();
+            var description = Request.Form["Description"].ToString();
+            var category = Request.Form["Category"].ToString();
+            var location = Request.Form["Location"].ToString();
+            var dateEvent = DateTime.Parse(Request.Form["DateEvent"]);
+            Event.InsertEvent(title, description, category, location, dateEvent);
+        }
+        return View("ListEvent");
     }
 
     public IActionResult Privacy()

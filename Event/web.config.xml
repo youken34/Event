@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<configuration>
+     <connectionStrings>
+             <add name="MyConnectionString" connectionString="SERVER=LAPTOP-CM6ELO5N\MSSQLSERVER01;UID=LAPTOP-CM6ELO5N\\Côme;PWD=;DATABASE=EventDB;TrustServerCertificate=true;Integrated Security=true;" 
+             providerName="System.Data.SqlClient" />
+        </connectionStrings>
+</configuration>

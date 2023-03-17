@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Côme\\Documents\\GitHub\\EventApp\\event\\Event.csproj": {}
+    "C:\\Users\\Côme\\Documents\\GitHub\\EventApp\\Event\\Event.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Côme\\Documents\\GitHub\\EventApp\\event\\Event.csproj": {
+    "C:\\Users\\Côme\\Documents\\GitHub\\EventApp\\Event\\Event.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Côme\\Documents\\GitHub\\EventApp\\event\\Event.csproj",
+        "projectUniqueName": "C:\\Users\\Côme\\Documents\\GitHub\\EventApp\\Event\\Event.csproj",
         "projectName": "Event",
-        "projectPath": "C:\\Users\\Côme\\Documents\\GitHub\\EventApp\\event\\Event.csproj",
+        "projectPath": "C:\\Users\\Côme\\Documents\\GitHub\\EventApp\\Event\\Event.csproj",
         "packagesPath": "C:\\Users\\Côme\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Côme\\Documents\\GitHub\\EventApp\\event\\obj\\",
+        "outputPath": "C:\\Users\\Côme\\Documents\\GitHub\\EventApp\\Event\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Côme\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -43,6 +43,18 @@
             "Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation": {
               "target": "Package",
               "version": "[7.0.4, )"
+            },
+            "System.Configuration": {
+              "target": "Package",
+              "version": "(, )"
+            },
+            "System.Configuration.ConfigurationManager": {
+              "target": "Package",
+              "version": "[7.0.0, )"
+            },
+            "System.Data.SqlClient": {
+              "target": "Package",
+              "version": "[4.8.5, )"
             }
           },
           "imports": [
