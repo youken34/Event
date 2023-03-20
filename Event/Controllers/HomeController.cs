@@ -1,6 +1,12 @@
 ﻿using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using Event.Models;
+using System.Text.RegularExpressions;
+using System;
+using System.Security.Cryptography;
+using System.Text;
+using System.Data.SqlClient;
+
 
 namespace Event.Controllers;
 
@@ -21,7 +27,63 @@ public class HomeController : Controller
     {
         return View();
     }
+    public IActionResult LogIn()
+    {
+        return View();
+    }
+    public IActionResult Privacy()
+    {
+        return View();
+    }
+    public IActionResult SignUp()
+    {
+        return View();
+    }
 
+    [HttpPost]
+    public IActionResult Connexion()
+    {
+        if (!(String.IsNullOrEmpty(Request.Form["Email"]) ||
+           String.IsNullOrEmpty(Request.Form["Password"])))
+        {
+
+        }
+        return View("Home");
+    }
+
+    [HttpPost]
+    public IActionResult NewUser()
+    {
+        if (!(String.IsNullOrEmpty(Request.Form["Email"]) ||
+           String.IsNullOrEmpty(Request.Form["Password"])))
+        {
+            var Email = Request.Form["Email"].ToString();
+            var Password = Request.Form["Password"].ToString();
+            bool containsLowercase = Regex.IsMatch(Password, "[a-z]");
+            bool containsUppercase = Regex.IsMatch(Password, "[A-Z]");
+            bool containsSpecialChar = Regex.IsMatch(Password, @"[^a-zA-Z0-9]");
+            if (containsLowercase && containsUppercase && containsSpecialChar)
+            {
+                if (EmailAndPasswordAlreadyTaken(Email, Password))
+                {
+                    byte[] passwordBytes = Encoding.UTF8.GetBytes(Password);
+                    byte[] hashedBytes = SHA256.Create().ComputeHash(passwordBytes);
+                    string hashedPassword = Convert.ToBase64String(hashedBytes);
+                    Users.Create(Email, hashedPassword);
+                    Console.WriteLine("Account created successfully");
+                }
+            }
+            else
+            {
+                Console.WriteLine("Password must contains one upper and lower character, one number and one special character");
+            }
+        }
+        else
+        {
+            Console.WriteLine("Fields are empty");
+        }
+        return View("SignUp");
+    }
     [HttpPost]
     public IActionResult Create()
     {
@@ -38,15 +100,53 @@ public class HomeController : Controller
             var category = Request.Form["Category"].ToString();
             var location = Request.Form["Location"].ToString();
             var dateEvent = DateTime.Parse(Request.Form["DateEvent"]);
-            Event.InsertEvent(title, description, category, location, dateEvent);
+            Event.Models.Event.InsertEvent(title, description, category, location, dateEvent);
         }
         return View("ListEvent");
     }
-
-    public IActionResult Privacy()
+    [HttpPost]
+    public bool EmailAndPasswordAlreadyTaken(String UserEmail, String UserPassword)
     {
-        return View();
+
+        String queryMail = "Select COUNT(*) FROM Users WHERE UserEmail = @UserEmail ";
+        String queryPassword = "Select COUNT(*) FROM Users WHERE UserPassword = @UserPassword";
+        using (SqlConnection connection = new SqlConnection(DatabaseController.getconnexionString()))
+        {
+            connection.Open();
+            using (SqlCommand commandEmail = new SqlCommand(queryMail, connection))
+            using (SqlCommand commandPassword = new SqlCommand(queryPassword, connection))
+            {
+                commandEmail.Parameters.AddWithValue("@UserEmail", UserEmail);
+                commandPassword.Parameters.AddWithValue("@UserPassword", UserPassword);
+
+                int countEmail = (int)commandEmail.ExecuteScalar();
+                int countPassword = (int)commandPassword.ExecuteScalar();
+                if (countEmail != 0)
+                {
+                    Console.WriteLine("Email already taken");
+                    return false;
+                }
+                else
+                {
+                    if (countPassword != 0)
+                    {
+                        Console.WriteLine("Password already taken");
+                        return false;
+                    }
+                    else
+                    {
+                        return true;
+                    }
+
+                }
+            }
+        }
+
+
+
     }
+
+
 
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
     public IActionResult Error()
