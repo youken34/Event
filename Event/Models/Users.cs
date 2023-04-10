@@ -16,6 +16,12 @@ class Users
     private string Email;
     private string Password;
 
+    public Users(int UserID, string Email, string Password)
+    {
+        this.UserID = UserID;
+        this.Email = Email;
+        this.Password = Password;
+    }
     public static void Create(String UserEmail, String Password)
     {
 

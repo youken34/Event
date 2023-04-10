@@ -18,9 +18,9 @@ public class CookiesController : Controller
 {
     public void newConnectedCookies()
     {
-        HttpCookie cookie = new HttpCookie("myCookie"); // Create a new cookie object with the name "myCookie"
-        cookie.Value = value.ToString(); // Set the value of the cookie to the string representation of the bool value
-        cookie.Expires = DateTime.Now.AddDays(1); // Set the cookie to expire in 1 day
-        Response.Cookies.Add(cookie);
+        Response.Cookies.Append("myCookie", "valeur de cookie", new CookieOptions
+        {
+            Expires = DateTimeOffset.Now.AddDays(1)
+        });
     }
 }
