@@ -33,4 +33,25 @@ public class DatabaseController : Controller
     {
 
     }
+    public static int FindUserID(string Email, string Password)
+    {
+        int UserID = 0;
+        SqlConnection connection = new SqlConnection(getconnexionString());
+        connection.Open();
+        String query = "SELECT UserID FROM Users WHERE UserEmail = @UserEmail AND UserPassword = @UserPassword";
+        SqlCommand command = new SqlCommand(query, connection);
+        command.Parameters.AddWithValue("@UserEmail", Email);
+        byte[] enteredPasswordBytes = Encoding.UTF8.GetBytes(Password);
+        byte[] enteredHashedBytes = SHA256.Create().ComputeHash(enteredPasswordBytes);
+        string enteredHashedPassword = Convert.ToBase64String(enteredHashedBytes);
+        command.Parameters.AddWithValue("@UserPassword", enteredHashedPassword);
+        SqlDataReader read = command.ExecuteReader();
+        while (read.HasRows)
+        {
+            read.Read();
+            UserID = read.GetInt32(0);
+        }
+        Console.WriteLine(UserID);
+        return UserID;
+    }
 }

@@ -12,6 +12,8 @@ namespace Event.Controllers;
 
 public class HomeController : Controller
 {
+    int countEmail;
+    int countPassword;
     private readonly ILogger<HomeController> _logger;
 
     public HomeController(ILogger<HomeController> logger)
@@ -43,12 +45,19 @@ public class HomeController : Controller
     [HttpPost]
     public IActionResult Connexion()
     {
-        if (!(String.IsNullOrEmpty(Request.Form["Email"]) ||
-           String.IsNullOrEmpty(Request.Form["Password"])))
+        String Email = Request.Form["Email"];
+        String Password = Request.Form["Password"];
+        if (!(String.IsNullOrEmpty(Email) ||
+           String.IsNullOrEmpty(Password)))
         {
+            if (EmailAndPasswordAlreadyTaken(Email, Password).Item1 == 1 && EmailAndPasswordAlreadyTaken(Email, Password).Item2 == 1)
+            {
+                Users userconnected = new Users(DatabaseController.FindUserID(Email, Password), Email, Password);
+                return View("Index");
+            }
 
         }
-        return View("Home");
+        return View("LogIn");
     }
 
     [HttpPost]
@@ -64,17 +73,13 @@ public class HomeController : Controller
             bool containsSpecialChar = Regex.IsMatch(Password, @"[^a-zA-Z0-9]");
             if (containsLowercase && containsUppercase && containsSpecialChar && Password.Length > 8)
             {
-                if (EmailAndPasswordAlreadyTaken(Email, Password))
+                if (EmailAndPasswordAlreadyTaken(Email, Password).Item1 == 0 && EmailAndPasswordAlreadyTaken(Email, Password).Item2 == 0)
                 {
                     byte[] passwordBytes = Encoding.UTF8.GetBytes(Password);
                     byte[] hashedBytes = SHA256.Create().ComputeHash(passwordBytes);
                     string hashedPassword = Convert.ToBase64String(hashedBytes);
                     Users.Create(Email, hashedPassword);
                     Console.WriteLine("Account created successfully");
-                }
-                else
-                {
-                    Console.WriteLine("Email and / or Password already taken");
                 }
             }
             else
@@ -109,7 +114,7 @@ public class HomeController : Controller
         return View("ListEvent");
     }
     [HttpPost]
-    public bool EmailAndPasswordAlreadyTaken(String UserEmail, String UserPassword)
+    public Tuple<int, int> EmailAndPasswordAlreadyTaken(String UserEmail, String UserPassword)
     {
 
         String queryMail = "Select COUNT(*) FROM Users WHERE UserEmail = @UserEmail ";
@@ -123,23 +128,23 @@ public class HomeController : Controller
                 commandEmail.Parameters.AddWithValue("@UserEmail", UserEmail);
                 commandPassword.Parameters.AddWithValue("@UserPassword", UserPassword);
 
-                int countEmail = (int)commandEmail.ExecuteScalar();
-                int countPassword = (int)commandPassword.ExecuteScalar();
+                countEmail = (int)commandEmail.ExecuteScalar();
+                countPassword = (int)commandPassword.ExecuteScalar();
                 if (countEmail != 0)
                 {
                     Console.WriteLine("Email already taken");
-                    return false;
+                    return Tuple.Create(countEmail, countPassword);
                 }
                 else
                 {
                     if (countPassword != 0)
                     {
                         Console.WriteLine("Password already taken");
-                        return false;
+                        return Tuple.Create(countEmail, countPassword);
                     }
                     else
                     {
-                        return true;
+                        return Tuple.Create(countEmail, countPassword);
                     }
 
                 }
