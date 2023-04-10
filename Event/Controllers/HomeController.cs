@@ -62,7 +62,7 @@ public class HomeController : Controller
             bool containsLowercase = Regex.IsMatch(Password, "[a-z]");
             bool containsUppercase = Regex.IsMatch(Password, "[A-Z]");
             bool containsSpecialChar = Regex.IsMatch(Password, @"[^a-zA-Z0-9]");
-            if (containsLowercase && containsUppercase && containsSpecialChar)
+            if (containsLowercase && containsUppercase && containsSpecialChar && Password.Length > 8)
             {
                 if (EmailAndPasswordAlreadyTaken(Email, Password))
                 {
@@ -72,10 +72,14 @@ public class HomeController : Controller
                     Users.Create(Email, hashedPassword);
                     Console.WriteLine("Account created successfully");
                 }
+                else
+                {
+                    Console.WriteLine("Email and / or Password already taken");
+                }
             }
             else
             {
-                Console.WriteLine("Password must contains one upper and lower character, one number and one special character");
+                Console.WriteLine("Password must contains at least 8 characters one upper and lower character, one number and one special character");
             }
         }
         else

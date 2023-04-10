@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Event.Models;
 using System.Text.RegularExpressions;
 using System;
-using System.Web
+using System.Web;
 using System.Security.Cryptography;
 using System.Text;
 using System.Data.SqlClient;
