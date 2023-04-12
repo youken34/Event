@@ -1,12 +1,56 @@
 /* _content/Event/Views/Shared/_Layout.cshtml.rz.scp.css */
-.footer[b-015bomi28r] {
-  position: absolute;
-  bottom: 0;
-  width: 100%;
-  white-space: nowrap;
-  line-height: 60px;
+/* Body styles */
+body[b-015bomi28r] {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
 }
 
-.navbar[b-015bomi28r] {
-  width: 100%;
+/* Header styles */
+header[b-015bomi28r] {
+  background-color: #333;
+  color: #fff;
+  padding: 10px;
+}
+
+/* Navigation styles */
+nav ul[b-015bomi28r] {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: flex-end;
+}
+
+nav li[b-015bomi28r] {
+  margin-right: 10px;
+}
+
+nav li:last-child[b-015bomi28r] {
+  margin-right: 0;
+}
+
+nav a[b-015bomi28r] {
+  color: #fff;
+  text-decoration: none;
+}
+
+nav a:hover[b-015bomi28r] {
+  color: #fff;
+  text-decoration: underline;
+}
+
+/* Main styles */
+.container[b-015bomi28r] {
+  margin: 0 auto;
+  max-width: 960px;
+  padding: 0 15px;
+}
+
+/* Footer styles */
+footer[b-015bomi28r] {
+  background-color: #f5f5f5;
+  border-top: 1px solid #ddd;
+  padding: 10px;
+  text-align: center;
 }
