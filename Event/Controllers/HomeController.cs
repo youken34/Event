@@ -12,8 +12,7 @@ namespace Event.Controllers;
 
 public class HomeController : Controller
 {
-    int countEmail;
-    int countPassword;
+
     private readonly ILogger<HomeController> _logger;
 
     public HomeController(ILogger<HomeController> logger)
@@ -23,6 +22,8 @@ public class HomeController : Controller
 
     public IActionResult Index()
     {
+        List<Models.Event> recentEvents = Models.Event.RecentEvents();
+        ViewBag.RecentEvents = recentEvents;
         return View();
     }
     public IActionResult ListEvent()
@@ -45,18 +46,22 @@ public class HomeController : Controller
     [HttpPost]
     public IActionResult Connexion()
     {
-        String Email = Request.Form["Email"];
-        String Password = Request.Form["Password"];
-        if (!(String.IsNullOrEmpty(Email) ||
+        String Email = Request.Form["Email"].ToString();
+        String Password = Request.Form["Password"].ToString();
+        if (!(String.IsNullOrEmpty(Email) &&
            String.IsNullOrEmpty(Password)))
         {
             if (EmailAndPasswordAlreadyTaken(Email, Password).Item1 == 1 && EmailAndPasswordAlreadyTaken(Email, Password).Item2 == 1)
             {
-                Users userconnected = new Users(DatabaseController.FindUserID(Email, Password), Email, Password);
+                Users userconnected = new Users(DatabaseController.FindUserID(Email, Password).GetUserID(), Email, Password);
+                ViewBag.user = userconnected;
+                List<Models.Event> recentEvents = Models.Event.RecentEvents();
+                ViewBag.RecentEvents = recentEvents;
                 return View("Index");
             }
 
         }
+
         return View("LogIn");
     }
 
@@ -116,9 +121,13 @@ public class HomeController : Controller
     [HttpPost]
     public Tuple<int, int> EmailAndPasswordAlreadyTaken(String UserEmail, String UserPassword)
     {
-
-        String queryMail = "Select COUNT(*) FROM Users WHERE UserEmail = @UserEmail ";
-        String queryPassword = "Select COUNT(*) FROM Users WHERE UserPassword = @UserPassword";
+        int countEmail = 0;
+        int countPassword = 0;
+        byte[] passwordBytes = Encoding.UTF8.GetBytes(UserPassword);
+        byte[] hashedBytes = SHA256.Create().ComputeHash(passwordBytes);
+        string hashedPassword = Convert.ToBase64String(hashedBytes);
+        String queryMail = "Select * FROM Users WHERE UserEmail = @UserEmail ";
+        String queryPassword = "Select * FROM Users WHERE UserPassword = @UserPassword";
         using (SqlConnection connection = new SqlConnection(DatabaseController.getconnexionString()))
         {
             connection.Open();
@@ -126,32 +135,24 @@ public class HomeController : Controller
             using (SqlCommand commandPassword = new SqlCommand(queryPassword, connection))
             {
                 commandEmail.Parameters.AddWithValue("@UserEmail", UserEmail);
-                commandPassword.Parameters.AddWithValue("@UserPassword", UserPassword);
-
-                countEmail = (int)commandEmail.ExecuteScalar();
-                countPassword = (int)commandPassword.ExecuteScalar();
-                if (countEmail != 0)
+                commandPassword.Parameters.AddWithValue("@UserPassword", hashedPassword);
+                SqlDataReader data = commandEmail.ExecuteReader();
+                if (data.HasRows)
                 {
+                    countEmail = 1;
                     Console.WriteLine("Email already taken");
-                    return Tuple.Create(countEmail, countPassword);
                 }
-                else
+                data.Close();
+                data = commandPassword.ExecuteReader();
+                if (data.HasRows)
                 {
-                    if (countPassword != 0)
-                    {
-                        Console.WriteLine("Password already taken");
-                        return Tuple.Create(countEmail, countPassword);
-                    }
-                    else
-                    {
-                        return Tuple.Create(countEmail, countPassword);
-                    }
-
+                    countPassword = 1;
+                    Console.WriteLine("Password already taken");
                 }
+                data.Close();
             }
         }
-
-
+        return Tuple.Create(countEmail, countPassword);
 
     }
 

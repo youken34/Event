@@ -7,15 +7,18 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/Event.styles.css" asp-append-version="true" />
+    <link href="https://img.icons8.com/ios/400/audi.png" rel="icon">
+    <link href="@Url.Content("~/Images/Event-logo.png")" rel="icon" type="image/png">
+
 </head>
 <body>
     <header>
         <nav class="navbar">
             <ul class="d-flex">
+                <li class="p-2"><a  asp-controller="Home" asp-action="">Home</a></li>
                 <li class="mr-auto p-2"><a  asp-controller="Home" asp-action="ListEvent">New Event</a></li>
                 <li class="p-2"><a  asp-controller="Home" asp-action="SignUp">Sign up</a></li>
                 <li class="p-2"><a  asp-controller="Home" asp-action="LogIn">Log in</a></li>
-                <li class="p-2"><a href=""></a>Page 4</li>
             </ul>
 
         </nav>

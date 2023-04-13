@@ -10,17 +10,49 @@ using Event.Controllers;
 
 namespace Event.Models;
 
-class Users
+public class Users
 {
-    private int UserID;
-    private string Email;
-    private string Password;
+    private int UserID { get; set; }
+    private string Email { get; set; }
+    private string Password { get; set; }
+
+    public Users()
+    {
+
+    }
 
     public Users(int UserID, string Email, string Password)
     {
         this.UserID = UserID;
         this.Email = Email;
         this.Password = Password;
+    }
+    // Getter
+    public int GetUserID()
+    {
+        return UserID;
+    }
+    public string GetEmail()
+    {
+        return Email;
+    }
+    public string GetPassword()
+    {
+        return Password;
+    }
+
+    // Setter
+    public void SetUserID(int User)
+    {
+        UserID = User;
+    }
+    public void SetEmail(string mail)
+    {
+        Email = mail;
+    }
+    public void SetPassword(string pass)
+    {
+        Password = pass;
     }
     public static void Create(String UserEmail, String Password)
     {

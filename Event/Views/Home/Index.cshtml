@@ -1,8 +1,22 @@
-﻿@{
+﻿@using Event.Models
+@{
     ViewData["Title"] = "Home Page";
+    var recentEvents = ViewBag.RecentEvents;
 }
 
 <div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    <h1 class="display-4">Recent Events</h1>
+</div>
+
+<div class="grid-container">
+    @foreach (var item in recentEvents)
+    {
+        <div class="grid-item">
+            <h2>@item.GetTitle()</h2>
+            <p>@item.GetDescription()</p>
+            <p>@item.GetCategory()</p>
+            <p>@item.GetLocation()</p>
+            <p>@item.GetDate().ToString("yyyy-MM-dd")</p>
+        </div>
+    }
 </div>

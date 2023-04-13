@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "OgacYwkiBSZBLa5KzJKlGsShahcBd4C7BLzrNzpDSaQ=",
+  "Hash": "FDPROLyt1w/7qeQTmjerKLmDUAT+fRAG8Du6gZxYFxM=",
   "Source": "Event",
   "BasePath": "_content/Event",
   "Mode": "Default",
@@ -83,6 +83,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\favicon.ico"
+    },
+    {
+      "Identity": "C:\\Users\\Côme\\Documents\\GitHub\\EventApp\\Event\\wwwroot\\images\\Event-logo.png",
+      "SourceId": "Event",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\Côme\\Documents\\GitHub\\EventApp\\Event\\wwwroot\\",
+      "BasePath": "_content/Event",
+      "RelativePath": "images/Event-logo.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\images\\Event-logo.png"
     },
     {
       "Identity": "C:\\Users\\Côme\\Documents\\GitHub\\EventApp\\Event\\wwwroot\\js\\site.js",
