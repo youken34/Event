@@ -17,7 +17,6 @@ public class DatabaseController : Controller
     public static String getconnexionString()
     {
         string connectionString = @"SERVER=LAPTOP-CM6ELO5N\MSSQLSERVER01;UID=LAPTOP-CM6ELO5N\\Côme;PWD=;DATABASE=EventDB;TrustServerCertificate=true;Integrated Security=true";
-
         return connectionString;
     }
     public static SqlCommand OpenConnexion(string query)
@@ -26,32 +25,39 @@ public class DatabaseController : Controller
         connection.Open();
         SqlCommand command = new SqlCommand(query, connection);
         return command;
-
     }
 
     public static void InsertInto()
     {
 
     }
-    public static int FindUserID(string Email, string Password)
+    public static Users FindUserID(string Email, string Password)
     {
-        int UserID = 0;
+        Users userFound = new Users();
         SqlConnection connection = new SqlConnection(getconnexionString());
         connection.Open();
-        String query = "SELECT UserID FROM Users WHERE UserEmail = @UserEmail AND UserPassword = @UserPassword";
-        SqlCommand command = new SqlCommand(query, connection);
-        command.Parameters.AddWithValue("@UserEmail", Email);
+        String query = "SELECT * FROM Users WHERE UserEmail = @UserEmail AND UserPassword = @UserPassword";
         byte[] enteredPasswordBytes = Encoding.UTF8.GetBytes(Password);
         byte[] enteredHashedBytes = SHA256.Create().ComputeHash(enteredPasswordBytes);
         string enteredHashedPassword = Convert.ToBase64String(enteredHashedBytes);
+        SqlCommand command = new SqlCommand(query, connection);
+        command.Parameters.AddWithValue("@UserEmail", Email);
         command.Parameters.AddWithValue("@UserPassword", enteredHashedPassword);
-        SqlDataReader read = command.ExecuteReader();
-        while (read.HasRows)
+        SqlDataReader data = command.ExecuteReader();
+        if (data.HasRows)
         {
-            read.Read();
-            UserID = read.GetInt32(0);
+            while (data.Read())
+            {
+
+                userFound.SetUserID(Convert.ToInt32(data["UserID"]));
+                userFound.SetEmail(data["UserEmail"].ToString());
+                userFound.SetPassword(data["UserPassword"].ToString());
+
+            }
         }
-        Console.WriteLine(UserID);
-        return UserID;
+        data.Close();
+        command.Dispose();
+        DatabaseController.OpenConnexion(query).Connection.Close();
+        return userFound;
     }
 }

@@ -10,12 +10,43 @@ using Event.Controllers;
 namespace Event.Models;
 public class Event
 {
-    private int EventId = 1;
+    private int EventId { get; set; }
     private string Title { get; set; }
     private string Description { get; set; }
     private string Category { get; set; }
     private string Location { get; set; }
     private DateTime DateEvent { get; set; }
+    public Event()
+    {
+
+    }
+
+    public int GetEventId()
+    {
+        return EventId;
+    }
+
+    public string GetTitle()
+    {
+        return Title;
+    }
+    public string GetDescription()
+    {
+        return Description;
+    }
+    public string GetCategory()
+    {
+        return Category;
+    }
+    public string GetLocation()
+    {
+        return Location;
+    }
+
+    public DateTime GetDate()
+    {
+        return DateEvent;
+    }
 
 
     public static void InsertEvent(string Title, string Description, string Category, string Location, DateTime DateEvent)
@@ -35,7 +66,31 @@ public class Event
         {
             Console.WriteLine($"Values added : Title : {data["Title"]}, Description : {data["Description"]}, Category : {data["Category"]}, Location : {data["Location"]}, Date : {data["DateEvent"]}");
         }
+        data.Close();
+        command.Dispose();
         DatabaseController.OpenConnexion(query).Connection.Close();
+    }
+    static public List<Event> RecentEvents()
+    {
+        List<Event> recentEvent = new List<Event>();
+        String query = "SELECT * FROM EVENT WHERE DateEvent >= GETDATE()";
+        SqlCommand command = DatabaseController.OpenConnexion(query);
+        SqlDataReader data = command.ExecuteReader();
+        while (data.Read())
+        {
+            Event eventItem = new Event();
+            eventItem.EventId = Convert.ToInt32(data["EventID"]);
+            eventItem.Title = data["Title"].ToString();
+            eventItem.Description = data["Description"].ToString();
+            eventItem.Category = data["Category"].ToString();
+            eventItem.Location = data["Location"].ToString();
+            eventItem.DateEvent = Convert.ToDateTime(data["DateEvent"]);
+            recentEvent.Add(eventItem);
+        }
+        data.Close();
+        command.Dispose();
+        DatabaseController.OpenConnexion(query).Connection.Close();
+        return recentEvent;
     }
 
 
