@@ -46,6 +46,7 @@ public class HomeController : Controller
     [HttpPost]
     public IActionResult Connexion()
     {
+        var cookiesController = new CookiesController();
         String Email = Request.Form["Email"].ToString();
         String Password = Request.Form["Password"].ToString();
         if (!(String.IsNullOrEmpty(Email) &&
@@ -53,10 +54,12 @@ public class HomeController : Controller
         {
             if (EmailAndPasswordAlreadyTaken(Email, Password).Item1 == 1 && EmailAndPasswordAlreadyTaken(Email, Password).Item2 == 1)
             {
-                Users userconnected = new Users(DatabaseController.FindUserID(Email, Password).GetUserID(), Email, Password);
-                ViewBag.user = userconnected;
+                Users Uservalue = DatabaseController.FindUser(Email, Password);
+                Users userconnected = new Users(Uservalue.GetUserID(), Uservalue.GetEmail(), Uservalue.GetPassword());
+                System.Console.WriteLine("id : ", Uservalue.GetUserID().ToString(), "email : ", Uservalue.GetEmail(), "pass : ", Uservalue.GetPassword().ToString());
                 List<Models.Event> recentEvents = Models.Event.RecentEvents();
                 ViewBag.RecentEvents = recentEvents;
+                cookiesController.newConnectedCookies(userconnected);
                 return View("Index");
             }
 
