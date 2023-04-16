@@ -378,3 +378,4 @@ C:\Users\Côme\Documents\GitHub\EventApp\Event\obj\Debug\net7.0\refint\Event.dll
 C:\Users\Côme\Documents\GitHub\EventApp\Event\obj\Debug\net7.0\Event.pdb
 C:\Users\Côme\Documents\GitHub\EventApp\Event\obj\Debug\net7.0\Event.genruntimeconfig.cache
 C:\Users\Côme\Documents\GitHub\EventApp\Event\obj\Debug\net7.0\ref\Event.dll
+C:\Users\Côme\Documents\GitHub\EventApp\Event\bin\Debug\net7.0\Newtonsoft.Json.dll
