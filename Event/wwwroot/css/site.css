@@ -2,11 +2,7 @@ html {
   font-size: 14px;
 }
 
-@media (min-width: 768px) {
-  html {
-    font-size: 16px;
-  }
-}
+
 
 .btn:focus,
 .btn:active:focus,
@@ -18,6 +14,7 @@ html {
 
 /* Global and common Styles */
 body {
+  overflow-y: hidden;
   height: 800px;
   font-family: "Roboto", sans-serif;
   background-color: #222;
@@ -40,10 +37,14 @@ header {
 
 .navbar {
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
   height: 60px;
   padding: 0 20px;
+}
+
+.navbar ul {
+  width: 100%;
 }
 
 .navbar li {
@@ -61,6 +62,23 @@ header {
 
 .navbar a:hover {
   color: #258cfb;
+}
+
+.navbar ul.d-flex.justify-content-between.align-items-center {
+  justify-content: space-between;
+}
+
+.fa-user {
+  padding: 10px;
+  border: 2px solid #222;
+}
+
+.fa-user:hover {
+  background-color: #222;
+}
+
+.navbar li.ml-auto {
+  margin-left: auto;
 }
 
 /* Footer Styles */
@@ -133,7 +151,41 @@ input[type="submit"]:hover {
   color: #fff;
 }
 
+/* Drop Down Menu */
+.dropdown-toggle::after {
+  display: none;
+}
+
+.dropdown-menu {
+  margin-top: 80px;
+  background-color: #333;
+  border: none;
+  border-radius: 0;
+  padding: 0;
+  margin-top: 4px;
+  box-shadow: none;
+}
+
+.dropdown-item {
+  color: #fff;
+}
+
+.dropdown-item:hover {
+  color: #258cfb;
+  background-color: transparent;
+}
+
+.dropdown-divider {
+  background-color: #444;
+}
+
+
+
 @media (max-width: 768px) {
+  html {
+    font-size: 16px;
+  }
+
   .event {
     width: 100%;
   }

@@ -48,11 +48,9 @@ public class DatabaseController : Controller
         {
             while (data.Read())
             {
-                System.Console.WriteLine(data["UserID"].ToString(), data["UserEmail"].ToString(), data["UserPassword"].ToString());
                 userFound.SetUserID(Convert.ToInt32(data["UserID"]));
                 userFound.SetEmail(data["UserEmail"].ToString());
                 userFound.SetPassword(data["UserPassword"].ToString());
-
             }
         }
         data.Close();

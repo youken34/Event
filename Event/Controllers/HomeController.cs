@@ -42,6 +42,11 @@ public class HomeController : Controller
     {
         return View();
     }
+    public IActionResult LogOut()
+    {
+        Response.Cookies.Delete("User");
+        return RedirectToAction("Index");
+    }
 
     [HttpPost]
     public IActionResult Connexion()
@@ -56,16 +61,16 @@ public class HomeController : Controller
             {
                 Users Uservalue = DatabaseController.FindUser(Email, Password);
                 Users userconnected = new Users(Uservalue.GetUserID(), Uservalue.GetEmail(), Uservalue.GetPassword());
-                System.Console.WriteLine("id : ", Uservalue.GetUserID().ToString(), "email : ", Uservalue.GetEmail(), "pass : ", Uservalue.GetPassword().ToString());
                 List<Models.Event> recentEvents = Models.Event.RecentEvents();
                 ViewBag.RecentEvents = recentEvents;
-                cookiesController.newConnectedCookies(userconnected);
-                return View("Index");
+                cookiesController.newConnectedCookies(userconnected, HttpContext.Response);
+                return RedirectToAction("Index");
+                // Redirect permet de non seulement changer la vue, mais également l'url, a contrario de View()
             }
 
         }
 
-        return View("LogIn");
+        return RedirectToAction("LogIn");
     }
 
     [HttpPost]
