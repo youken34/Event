@@ -6,16 +6,21 @@ using System.Web;
 using System.Data;
 using System.Configuration;
 using Event.Controllers;
-
+using Newtonsoft.Json;
 
 namespace Event.Models;
 
 public class Users
 {
+    [JsonProperty("UserID")]
     private int UserID { get; set; }
-    private string Email { get; set; }
-    private string Password { get; set; }
 
+    [JsonProperty("Email")]
+    private string Email { get; set; }
+
+    [JsonProperty("Password")]
+    private string Password { get; set; }
+    // JsonProperty permet a une instance de la classe User d'être transformer au format Json tout en gardant les attributs private
     public Users()
     {
 
