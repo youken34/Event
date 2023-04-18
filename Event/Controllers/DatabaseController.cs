@@ -27,9 +27,12 @@ public class DatabaseController : Controller
         return command;
     }
 
-    public static void InsertInto()
+    public static string CryptePassword(String Password)
     {
-
+        byte[] enteredPasswordBytes = Encoding.UTF8.GetBytes(Password);
+        byte[] enteredHashedBytes = SHA256.Create().ComputeHash(enteredPasswordBytes);
+        string enteredHashedPassword = Convert.ToBase64String(enteredHashedBytes);
+        return enteredHashedPassword;
     }
     public static Users FindUser(string Email, string Password)
     {
@@ -37,12 +40,10 @@ public class DatabaseController : Controller
         SqlConnection connection = new SqlConnection(getconnexionString());
         connection.Open();
         String query = "SELECT * FROM Users WHERE UserEmail = @UserEmail AND UserPassword = @UserPassword";
-        byte[] enteredPasswordBytes = Encoding.UTF8.GetBytes(Password);
-        byte[] enteredHashedBytes = SHA256.Create().ComputeHash(enteredPasswordBytes);
-        string enteredHashedPassword = Convert.ToBase64String(enteredHashedBytes);
+        Password = DatabaseController.CryptePassword(Password);
         SqlCommand command = new SqlCommand(query, connection);
         command.Parameters.AddWithValue("@UserEmail", Email);
-        command.Parameters.AddWithValue("@UserPassword", enteredHashedPassword);
+        command.Parameters.AddWithValue("@UserPassword", Password);
         SqlDataReader data = command.ExecuteReader();
         if (data.HasRows)
         {

@@ -6,6 +6,8 @@ using System;
 using System.Security.Cryptography;
 using System.Text;
 using System.Data.SqlClient;
+using Newtonsoft.Json;
+
 
 
 namespace Event.Controllers;
@@ -57,17 +59,16 @@ public class HomeController : Controller
         if (!(String.IsNullOrEmpty(Email) &&
            String.IsNullOrEmpty(Password)))
         {
-            if (EmailAndPasswordAlreadyTaken(Email, Password).Item1 == 1 && EmailAndPasswordAlreadyTaken(Email, Password).Item2 == 1)
+            Users Uservalue = DatabaseController.FindUser(Email, Password);
+            if (Uservalue.GetEmail() != null)
             {
-                Users Uservalue = DatabaseController.FindUser(Email, Password);
                 Users userconnected = new Users(Uservalue.GetUserID(), Uservalue.GetEmail(), Uservalue.GetPassword());
                 List<Models.Event> recentEvents = Models.Event.RecentEvents();
                 ViewBag.RecentEvents = recentEvents;
                 cookiesController.newConnectedCookies(userconnected, HttpContext.Response);
                 return RedirectToAction("Index");
-                // Redirect permet de non seulement changer la vue, mais également l'url, a contrario de View()
             }
-
+            // Redirect permet de non seulement changer la vue, mais également l'url, a contrario de View()
         }
 
         return RedirectToAction("LogIn");
@@ -88,10 +89,8 @@ public class HomeController : Controller
             {
                 if (EmailAndPasswordAlreadyTaken(Email, Password).Item1 == 0 && EmailAndPasswordAlreadyTaken(Email, Password).Item2 == 0)
                 {
-                    byte[] passwordBytes = Encoding.UTF8.GetBytes(Password);
-                    byte[] hashedBytes = SHA256.Create().ComputeHash(passwordBytes);
-                    string hashedPassword = Convert.ToBase64String(hashedBytes);
-                    Users.Create(Email, hashedPassword);
+                    Password = DatabaseController.CryptePassword(Password);
+                    Users.Create(Email, Password);
                     Console.WriteLine("Account created successfully");
                 }
             }
@@ -122,7 +121,10 @@ public class HomeController : Controller
             var category = Request.Form["Category"].ToString();
             var location = Request.Form["Location"].ToString();
             var dateEvent = DateTime.Parse(Request.Form["DateEvent"]);
-            Event.Models.Event.InsertEvent(title, description, category, location, dateEvent);
+            var cookie = HttpContext.Request.Cookies["User"];
+            var user = JsonConvert.DeserializeObject<Users>(cookie);
+            Console.WriteLine(user.GetUserID());
+            Event.Models.Event.InsertEvent(title, description, category, location, dateEvent, user.GetUserID());
         }
         return View("ListEvent");
     }
@@ -131,9 +133,7 @@ public class HomeController : Controller
     {
         int countEmail = 0;
         int countPassword = 0;
-        byte[] passwordBytes = Encoding.UTF8.GetBytes(UserPassword);
-        byte[] hashedBytes = SHA256.Create().ComputeHash(passwordBytes);
-        string hashedPassword = Convert.ToBase64String(hashedBytes);
+        UserPassword = DatabaseController.CryptePassword(UserPassword);
         String queryMail = "Select * FROM Users WHERE UserEmail = @UserEmail ";
         String queryPassword = "Select * FROM Users WHERE UserPassword = @UserPassword";
         using (SqlConnection connection = new SqlConnection(DatabaseController.getconnexionString()))
@@ -143,7 +143,7 @@ public class HomeController : Controller
             using (SqlCommand commandPassword = new SqlCommand(queryPassword, connection))
             {
                 commandEmail.Parameters.AddWithValue("@UserEmail", UserEmail);
-                commandPassword.Parameters.AddWithValue("@UserPassword", hashedPassword);
+                commandPassword.Parameters.AddWithValue("@UserPassword", UserPassword);
                 SqlDataReader data = commandEmail.ExecuteReader();
                 if (data.HasRows)
                 {
