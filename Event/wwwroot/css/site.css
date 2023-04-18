@@ -157,11 +157,12 @@ input[type="submit"]:hover {
 }
 
 .dropdown-menu {
+  position: absolute;
+  right: -25px;
   margin-top: 80px;
   background-color: #333;
   border: none;
   border-radius: 0;
-  padding: 0;
   margin-top: 4px;
   box-shadow: none;
 }

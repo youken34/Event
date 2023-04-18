@@ -1,11 +1,16 @@
 ﻿@{
-  var httpContext = new HttpContextAccessor().HttpContext;
 
-// Get the cookie with the name "User"
-var cookie = ViewContext.HttpContext.Request.Cookies["User"];
+    var httpContext = new HttpContextAccessor().HttpContext;
 
-// Deserialize the JSON data into a Users object
-var user = JsonConvert.DeserializeObject<Users>(cookie);
+    // Get the cookie with the name "User"
+    var cookie = ViewContext.HttpContext.Request.Cookies["User"];
+
+    // Deserialize the JSON data into a Users object
+    Users user = null;
+    if (cookie != null)
+{
+    user = JsonConvert.DeserializeObject<Users>(cookie);
+}
 }
 <!DOCTYPE html>
 <html lang="en">
@@ -29,6 +34,7 @@ var user = JsonConvert.DeserializeObject<Users>(cookie);
             @if (ViewContext.HttpContext.Request.Cookies["User"] != null)
             {
                 <li class="p-2"><a asp-controller="Home" asp-action="ListEvent">New Event</a></li>
+                <li class="p-2"><a asp-controller="Event" asp-action="MyEvents">My Events</a></li>
                 <li class="ml-auto dropdown">
                 <a href="#" class="dropdown-toggle" id="user-dropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <i class="fa-solid fa fa-user"></i>
