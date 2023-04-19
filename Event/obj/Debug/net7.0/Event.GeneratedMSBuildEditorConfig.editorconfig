@@ -16,6 +16,10 @@ build_property.GenerateRazorMetadataSourceChecksumAttributes = true
 build_property.MSBuildProjectDirectory = C:\Users\Côme\Documents\GitHub\EventApp\Event
 build_property._RazorSourceGeneratorDebug = 
 
+[C:/Users/Côme/Documents/GitHub/EventApp/Event/Views/Event/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRXZlbnRcSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/Côme/Documents/GitHub/EventApp/Event/Views/Event/MyEvents.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRXZlbnRcTXlFdmVudHMuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 

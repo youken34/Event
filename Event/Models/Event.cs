@@ -51,6 +51,28 @@ public class Event
     {
         return DateEvent;
     }
+
+    public static Event EventDetails(int EventID)
+    {
+        Event eventdetails = new Event();
+        String query = "SELECT * FROM EVENT WHERE EventID = @EventID";
+        SqlCommand command = DatabaseController.OpenConnexion(query);
+        command.Parameters.AddWithValue("@EventID", EventID);
+        SqlDataReader data = command.ExecuteReader();
+        if (data.HasRows)
+        {
+            data.Read();
+            eventdetails.EventId = Convert.ToInt32(data["EventID"]);
+            eventdetails.Title = data["Title"].ToString();
+            eventdetails.Description = data["Description"].ToString();
+            eventdetails.Category = data["Category"].ToString();
+            eventdetails.Location = data["Location"].ToString();
+            eventdetails.DateEvent = Convert.ToDateTime(data["DateEvent"]);
+        }
+        data.Close();
+        command.Dispose();
+        return eventdetails;
+    }
     public static void InsertEvent(string Title, string Description, string Category, string Location, DateTime DateEvent, int UserID)
     {
         String query = "INSERT INTO Event (Title, Description, Category, Location, DateEvent, UserID) VALUES(@Title, @Description, @Category, @Location, @DateEvent, @UserID)";
@@ -69,7 +91,6 @@ public class Event
         }
         data.Close();
         command.Dispose();
-        DatabaseController.OpenConnexion(query).Connection.Close();
     }
     public static List<Event> MyEvents(string UserID)
     {
@@ -77,7 +98,6 @@ public class Event
         String query = "SELECT * FROM EVENT WHERE UserID = @UserID";
         SqlCommand command = DatabaseController.OpenConnexion(query);
         command.Parameters.AddWithValue("@UserID", UserID);
-        Console.WriteLine(UserID);
         SqlDataReader data = command.ExecuteReader();
         if (data.HasRows)
         {

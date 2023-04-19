@@ -17,6 +17,7 @@
             <p>@item.GetCategory()</p>
             <p>@item.GetLocation()</p>
             <p>@item.GetDate().ToString("yyyy-MM-dd")</p>
+            <a asp-controller="Event" asp-action="Index" asp-route-id="@item.GetEventId()">See more</a>
         </div>
     }
 </div>

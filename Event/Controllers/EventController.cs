@@ -10,6 +10,12 @@ namespace Event.Controllers;
 
 public class EventController : Controller
 {
+    public IActionResult Index(int id)
+    {
+        Event.Models.Event eventdetails = Event.Models.Event.EventDetails(id);
+        ViewBag.Eventdetails = eventdetails;
+        return View();
+    }
     public IActionResult MyEvents()
     {
         List<Event.Models.Event> myEvents = new List<Event.Models.Event>();
