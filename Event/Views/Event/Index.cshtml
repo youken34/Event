@@ -1,0 +1,27 @@
+@{
+    var eventdetails = ViewBag.Eventdetails;
+    ViewBag.Title = eventdetails.GetTitle();
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+<div class="event">
+  <div class="event-header">
+    <h2 class="event-title">@eventdetails.GetTitle()</h2>
+    <p class="event-category">@eventdetails.GetCategory()</p>
+  </div>
+  <div class="event-body">
+    <p class="event-description">@eventdetails.GetDescription()</p>
+    <p class="event-location">@eventdetails.GetLocation()</p>
+    <p class="event-date">@eventdetails.GetDate().ToString("yyyy-MM-dd")</p>
+  </div>
+</div>
+</body>
+</html>

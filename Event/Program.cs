@@ -23,7 +23,15 @@ app.UseRouting();
 app.UseAuthorization();
 
 app.MapControllerRoute(
+    name: "event",
+    pattern: "Event/{id?}",
+    defaults: new { controller = "Event", action = "Index" }
+);
+
+app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
+
+
 
 app.Run();
