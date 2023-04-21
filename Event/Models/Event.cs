@@ -8,8 +8,7 @@ using System.Configuration;
 using Event.Controllers;
 using Microsoft.AspNetCore.Http;
 using Newtonsoft.Json;
-
-
+using System.Globalization;
 
 namespace Event.Models;
 public class Event
@@ -75,13 +74,13 @@ public class Event
     }
     public static void InsertEvent(string Title, string Description, string Category, string Location, DateTime DateEvent, int UserID)
     {
-        String query = "INSERT INTO Event (Title, Description, Category, Location, DateEvent, UserID) VALUES(@Title, @Description, @Category, @Location, @DateEvent, @UserID)";
+        String query = "INSERT INTO Event (Title, Description, Category, Location, DateEvent, UserID) VALUES(@Title, @Description, @Category, @Location, CONVERT(DATETIME, @DateEvent,  101), @UserID)";
         SqlCommand command = DatabaseController.OpenConnexion(query);
         command.Parameters.AddWithValue("@Title", Title);
         command.Parameters.AddWithValue("@Description", Description);
         command.Parameters.AddWithValue("@Category", Category);
         command.Parameters.AddWithValue("@Location", Location);
-        command.Parameters.AddWithValue("@DateEvent", DateEvent.ToString("MM/dd/yyyy hh:mm:ss tt"));
+        command.Parameters.AddWithValue("@DateEvent", DateEvent.ToString("MMM dd yyyy h:mmtt", CultureInfo.InvariantCulture));
         command.Parameters.AddWithValue("@UserID", UserID);
         SqlDataReader data = command.ExecuteReader();
 

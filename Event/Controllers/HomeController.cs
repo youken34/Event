@@ -123,7 +123,6 @@ public class HomeController : Controller
             var dateEvent = DateTime.Parse(Request.Form["DateEvent"]);
             var cookie = HttpContext.Request.Cookies["User"];
             var user = JsonConvert.DeserializeObject<Users>(cookie);
-            Console.WriteLine(user.GetUserID());
             Event.Models.Event.InsertEvent(title, description, category, location, dateEvent, user.GetUserID());
         }
         return View("ListEvent");

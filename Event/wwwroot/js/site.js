@@ -1,5 +1,7 @@
 ﻿// Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
 // for details on configuring this project to bundle and minify static web assets.
+
+/* Icon drop down menu */
 const icon = document.querySelector(".fa-user");
 const menu = document.querySelector(".dropdown-menu");
 
@@ -22,4 +24,25 @@ menu.addEventListener("mouseenter", function () {
 menu.addEventListener("mouseleave", function () {
     menu.classList.remove("show");
 });
-// Write your JavaScript code.
+
+/* Auto suggestion regarding the location */
+Bkoi.onSelect(function () {
+    var selectedData = Bkoi.getSelectedData()
+})
+
+/* Background image category */
+function applyBackground(category) {
+    var divcategory = document.querySelector(`.${category}`);
+    switch (category) {
+        case 'conference':
+            divcategory.style.backgroundImage = null;
+            break;
+        default:
+            break;
+    }
+}
+function removeBackground(category) {
+    var divcategory = document.querySelector(`.${category}`);
+    divcategory.style.backgroundImage = null;
+}
+

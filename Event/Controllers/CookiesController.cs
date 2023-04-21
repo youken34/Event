@@ -24,7 +24,7 @@ public class CookiesController : Controller
             string user = JsonConvert.SerializeObject(newUser, settings);
             response.Cookies.Append("User", user, new CookieOptions
             {
-                Expires = DateTimeOffset.Now.AddDays(1),
+                Expires = DateTimeOffset.Now.AddDays(15),
                 Domain = "localhost",
                 Path = "/"
             });
