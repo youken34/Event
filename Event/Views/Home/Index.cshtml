@@ -6,17 +6,38 @@
 <div class="img-banner">
     <img src="https://images.unsplash.com/photo-1444210971048-6130cf0c46cf?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1173&q=80" alt="">
 </div>
-<div class="grid-container container">
-    @foreach (var item in recentEvents)
-    {
-        <div class="grid-item @item.GetCategory().ToLower()" onmouseover="applyBackground('@(item.GetCategory().ToLower())')" onmouseleave="removeBackground('@(item.GetCategory().ToLower())')">
-            <img src="https://i.pinimg.com/564x/44/d2/da/44d2daf7c1dcec8efdc965d1a3144219.jpg" alt="">
-            <h2>@item.GetTitle()</h2>
-            @* <p>@item.GetDescription()</p> *@
-            <p >@item.GetCategory()</p>
-            <p>@item.GetLocation()</p>
-            <p>@item.GetDate().ToString("yyyy-MM-dd")</p>
-            <a asp-controller="Event" asp-action="Index" asp-route-id="@item.GetEventId()">See more</a>
-        </div>
-    }
+@* Filter details menu on the right side *@
+<div class="filter-details align-items-center">
+    <p>Category</p>
+    <p>Range</p>
+    <p>This week</p>
+    <label for="free">Free
+    <input name="free" type="checkbox"></input>
+    </label>
+    <div class="apply justify-content-center">
+        <a onclick="applyFilters()">Apply</a>
+    </div>
+</div>
+
+
+<div class="container">
+<div class="d-flex">
+    <div class="filter justify-content-center">
+       <p onclick="filterMenu()">Filter</p> 
+    </div>
+</div>
+<div class="grid-container">
+        @foreach (var item in recentEvents)
+        {
+                <div class="grid-item @item.GetCategory().ToLower()" onmouseover="applyBackground('@(item.GetCategory().ToLower())')" onmouseleave="removeBackground('@(item.GetCategory().ToLower())')">
+                    <img src="https://i.pinimg.com/564x/44/d2/da/44d2daf7c1dcec8efdc965d1a3144219.jpg" alt="">
+                    <h2>@item.GetTitle()</h2>
+                @* <p>@item.GetDescription()</p> *@
+                    <p >@item.GetCategory()</p>
+                    <p>@item.GetLocation()</p>
+                    <p>@item.GetDate().ToString("yyyy-MM-dd")</p>
+                    <a asp-controller="Event" asp-action="Index" asp-route-id="@item.GetEventId()">See more</a>
+                </div>
+        }
+</div>
 </div>

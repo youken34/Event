@@ -24,11 +24,31 @@ menu.addEventListener("mouseenter", function () {
 menu.addEventListener("mouseleave", function () {
     menu.classList.remove("show");
 });
+/* Filters apparition */
+var Menufilter = document.querySelector(".filter-details");
+var filterOn = false;
+function filterMenuApparition() {
+    Menufilter.style.transform = "translateX(0px)";
+}
+
+function removeFilterMenu() {
+    Menufilter.style.transform = "translateX(200px)";
+}
+
+function filterMenu() {
+    if (filterOn == false) {
+
+        filterMenuApparition();
+    }
+    else {
+        removeFilterMenu();
+    }
+    filterOn = !filterOn;
+}
+
 
 /* Auto suggestion regarding the location */
-Bkoi.onSelect(function () {
-    var selectedData = Bkoi.getSelectedData()
-})
+
 
 /* Background image category */
 function applyBackground(category) {
