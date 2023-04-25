@@ -16,7 +16,15 @@ public class Event
     private int EventId { get; set; }
     private string Title { get; set; }
     private string Description { get; set; }
-    private string Category { get; set; }
+    private enum TypeofCategory
+    {
+        Festival,
+        Tournament,
+        Party,
+        Conference,
+        Expo
+    }
+    private TypeofCategory Category { get; set; }
     private string Location { get; set; }
     private DateTime DateEvent { get; set; }
     public Event()
@@ -39,7 +47,7 @@ public class Event
     }
     public string GetCategory()
     {
-        return Category;
+        return Category.ToString();
     }
     public string GetLocation()
     {
@@ -64,9 +72,15 @@ public class Event
             eventdetails.EventId = Convert.ToInt32(data["EventID"]);
             eventdetails.Title = data["Title"].ToString();
             eventdetails.Description = data["Description"].ToString();
-            eventdetails.Category = data["Category"].ToString();
             eventdetails.Location = data["Location"].ToString();
             eventdetails.DateEvent = Convert.ToDateTime(data["DateEvent"]);
+            string categoryString = data["Category"].ToString();
+
+            if (Enum.TryParse(categoryString, out TypeofCategory category))
+            {
+                eventdetails.Category = category;
+
+            }
         }
         data.Close();
         command.Dispose();
@@ -106,9 +120,15 @@ public class Event
                 eventItem.EventId = Convert.ToInt32(data["EventID"]);
                 eventItem.Title = data["Title"].ToString();
                 eventItem.Description = data["Description"].ToString();
-                eventItem.Category = data["Category"].ToString();
                 eventItem.Location = data["Location"].ToString();
                 eventItem.DateEvent = Convert.ToDateTime(data["DateEvent"]);
+                string categoryString = data["Category"].ToString();
+
+                if (Enum.TryParse(categoryString, out TypeofCategory category))
+                {
+                    eventItem.Category = category;
+
+                }
                 myevents.Add(eventItem);
             }
         }
@@ -130,9 +150,15 @@ public class Event
                 eventItem.EventId = Convert.ToInt32(data["EventID"]);
                 eventItem.Title = data["Title"].ToString();
                 eventItem.Description = data["Description"].ToString();
-                eventItem.Category = data["Category"].ToString();
                 eventItem.Location = data["Location"].ToString();
                 eventItem.DateEvent = Convert.ToDateTime(data["DateEvent"]);
+                string categoryString = data["Category"].ToString();
+
+                if (Enum.TryParse(categoryString, out TypeofCategory category))
+                {
+                    eventItem.Category = category;
+
+                }
                 recentEvent.Add(eventItem);
             }
         }

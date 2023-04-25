@@ -29,8 +29,8 @@
 <div class="grid-container">
         @foreach (var item in recentEvents)
         {
-                <div class="grid-item @item.GetCategory().ToLower()" onmouseover="applyBackground('@(item.GetCategory().ToLower())')" onmouseleave="removeBackground('@(item.GetCategory().ToLower())')">
-                    <img src="https://i.pinimg.com/564x/44/d2/da/44d2daf7c1dcec8efdc965d1a3144219.jpg" alt="">
+                <div class="grid-item @item.GetCategory().ToLower()" onload="applyBackground('@(item.GetCategory().ToLower())')">
+                    <img  alt="">
                     <h2>@item.GetTitle()</h2>
                 @* <p>@item.GetDescription()</p> *@
                     <p >@item.GetCategory()</p>
