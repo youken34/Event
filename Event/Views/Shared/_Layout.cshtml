@@ -30,12 +30,8 @@
     <header>
         <nav class="navbar">
             <ul class="d-flex  align-items-center">
-            <li class="p-2"><a asp-controller="Home" asp-action="">Home</a></li>
             @if (ViewContext.HttpContext.Request.Cookies["User"] != null)
-            {
-                <li class="p-2"><a asp-controller="Home" asp-action="ListEvent">New Event</a></li>
-                <li class="p-2"><a asp-controller="Event" asp-action="MyEvents">My Events</a></li>
-                <li class="ml-auto dropdown">
+            {   <li class="dropdown">
                 <a href="#" class="dropdown-toggle" id="user-dropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <i class="fa-solid fa fa-user"></i>
                 </a>
@@ -46,9 +42,14 @@
                     <a asp-controller="Home" asp-action="LogOut">Log Out</a>
                 </div>
                 </li>
+                <li class="p-2" style="margin-left: 13px;"><a asp-controller="Home" asp-action="">Home</a></li>
+                <li class="p-2"><a asp-controller="Home" asp-action="ListEvent">New Event</a></li>
+                <li class="p-2"><a asp-controller="Event" asp-action="MyEvents">My Events</a></li>
+                
             }
             else
             {
+                <li class="p-2" style="margin-left: 72px;"><a asp-controller="Home" asp-action="">Home</a></li>
                 <li class="p-2"><a asp-controller="Home" asp-action="SignUp">Sign up</a></li>
                 <li class="p-2"><a asp-controller="Home" asp-action="LogIn">Log in</a></li>
             }
