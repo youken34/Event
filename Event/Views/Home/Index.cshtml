@@ -29,15 +29,14 @@
 <div class="grid-container">
         @foreach (var item in recentEvents)
         {
-                <div class="grid-item @item.GetCategory().ToLower()" onload="applyBackground('@(item.GetCategory().ToLower())')">
-                    <img  alt="">
-                    <h2>@item.GetTitle()</h2>
-                @* <p>@item.GetDescription()</p> *@
-                    <p >@item.GetCategory()</p>
-                    <p>@item.GetLocation()</p>
-                    <p>@item.GetDate().ToString("yyyy-MM-dd")</p>
-                    <a asp-controller="Event" asp-action="Index" asp-route-id="@item.GetEventId()">See more</a>
-                </div>
+            <div class="grid-item @item.GetCategory().ToLower()" onload="applyBackground('@(item.GetCategory().ToLower())')">
+                <img src="" alt="">
+                <h2>@item.GetTitle()</h2>
+                <p >@item.GetCategory()</p>
+                <p>@item.GetLocation()</p>
+                <p>@item.GetDate().ToString("yyyy-MM-dd")</p>
+                <a asp-controller="Event" asp-action="Index" asp-route-id="@item.GetEventId()">See more</a>
+            </div>
         }
 </div>
 </div>

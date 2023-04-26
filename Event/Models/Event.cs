@@ -123,13 +123,13 @@ public class Event
                 eventItem.Location = data["Location"].ToString();
                 eventItem.DateEvent = Convert.ToDateTime(data["DateEvent"]);
                 string categoryString = data["Category"].ToString();
-
                 if (Enum.TryParse(categoryString, out TypeofCategory category))
                 {
                     eventItem.Category = category;
 
                 }
                 myevents.Add(eventItem);
+                Console.WriteLine(eventItem.GetDescription(), eventItem.GetLocation);
             }
         }
         data.Close();

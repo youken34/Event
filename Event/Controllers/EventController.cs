@@ -21,6 +21,7 @@ public class EventController : Controller
         List<Event.Models.Event> myEvents = new List<Event.Models.Event>();
         var cookie = Request.Cookies["User"];
         Users user = JsonConvert.DeserializeObject<Users>(cookie);
+        Console.WriteLine(user.GetUserID());
         myEvents = Event.Models.Event.MyEvents(user.GetUserID().ToString());
         ViewBag.MyEvents = myEvents;
         return View();
