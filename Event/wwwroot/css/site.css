@@ -247,8 +247,7 @@ h1 {
 }
 
 .grid-item {
-  position: relative;
-  z-index: -2;
+  z-index: 0;
   height: 400px;
   background-color: #fff;
   color: #000;
@@ -303,13 +302,6 @@ h1 {
   color: #333333;
 }
 
-
-/* Date */
-.grid-item p {
-  font-family: "Helvetica Neue", sans-serif;
-  font-size: 14px;
-  color: #666666;
-}
 
 /* Category */
 .grid-item p {
