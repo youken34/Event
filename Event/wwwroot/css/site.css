@@ -105,8 +105,15 @@ header {
   cursor: pointer;
 }
 
+.filter-tag {
+  z-index: 2;
+  flex-direction: column;
+  position: absolute;
+  display: flex;
+}
+
 .filter-details {
-  z-index: -1;
+  z-index: 0;
   display: flex;
   flex-direction: column;
   top: 60px;
@@ -119,35 +126,35 @@ header {
   transition: 0.5s;
 }
 
-.filter-details p,
-.filter-details label {
+.filter-tag p,
+.filter-tag label {
   margin-top: 20px;
   font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
   border-bottom: 2px solid #b1b1b1;
   font-size: 25px;
 }
 
-.filter-details label {
+.filter-tag label {
   display: inline-block;
 }
 
-.filter-details input[type="checkbox"] {
+.filter-tag input[type="checkbox"] {
   margin-bottom: 2px;
 }
 
-.filter-details p:hover,
-.filter-details label:hover {
+.filter-tag p:hover,
+.filter-tag label:hover {
   cursor: pointer;
   border-bottom: 2px solid #007bff;
   color: #007bff;
 }
 
 .apply {
-  cursor: pointer;
   display: flex;
-  position: absolute;
   height: 40px;
   width: 130px;
+  cursor: pointer;
+  position: fixed;
   background-color: #007bff;
   color: #fff;
   bottom: 100px;
@@ -155,6 +162,7 @@ header {
 }
 
 .apply a {
+
   display: inline-block;
   line-height: 40px;
   font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
@@ -216,12 +224,14 @@ input[type="submit"]:hover {
   background-color: #007bff;
 }
 
-img:first-of-type {
-  position: relative;
-  z-index: -2;
-}
+
 
 /* Image banner */
+.img-banner {
+  position: relative;
+  z-index: -5;
+}
+
 .img-banner>img {
   height: 500px;
   width: 100%;
@@ -231,8 +241,6 @@ img:first-of-type {
 h1 {
   color: #000;
 }
-
-/* Background image per category */
 
 
 /* Event display style */
@@ -247,7 +255,6 @@ h1 {
 }
 
 .grid-item {
-  z-index: 0;
   height: 400px;
   background-color: #fff;
   color: #000;
@@ -311,15 +318,19 @@ h1 {
 }
 
 /* Drop Down Menu */
+#push {
+  transition: 0.5s;
+}
+
 .dropdown-toggle::after {
   display: none;
 }
 
 
 .dropdown .dropdown-menu {
-  position: fixed;
+  position: absolute;
+  left: 0;
   z-index: 3;
-  right: 5px;
 }
 
 .dropdown-item {
@@ -386,7 +397,7 @@ h1 {
 
 /* Footer Styles */
 footer {
-  z-index: -2;
+  z-index: -5;
   margin-top: auto;
   width: 100%;
   position: absolute;

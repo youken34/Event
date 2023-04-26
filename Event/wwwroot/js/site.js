@@ -7,32 +7,39 @@ const menu = document.querySelector(".dropdown-menu");
 
 let timeoutId;
 
-icon.addEventListener("mouseover", function () {
-    menu.classList.add("show");
-});
+if (icon != null) {
+    icon.addEventListener("mouseover", function () {
+        menu.classList.add("show");
+    });
 
-icon.addEventListener("mouseleave", function () {
-    timeoutId = setTimeout(() => {
+    icon.addEventListener("mouseleave", function () {
+        timeoutId = setTimeout(() => {
+            menu.classList.remove("show");
+        }, 300);
+    });
+
+    menu.addEventListener("mouseenter", function () {
+        clearTimeout(timeoutId);
+    });
+
+    menu.addEventListener("mouseleave", function () {
         menu.classList.remove("show");
-    }, 300);
-});
+    });
+}
 
-menu.addEventListener("mouseenter", function () {
-    clearTimeout(timeoutId);
-});
-
-menu.addEventListener("mouseleave", function () {
-    menu.classList.remove("show");
-});
 /* Filters apparition */
 var Menufilter = document.querySelector(".filter-details");
+var push = document.getElementById("push");
 var filterOn = false;
 function filterMenuApparition() {
+    push.style.transform = "translateX(-100px)";
     Menufilter.style.transform = "translateX(0px)";
 }
 
 function removeFilterMenu() {
     Menufilter.style.transform = "translateX(200px)";
+    push.style.transform = "translateX(0px)";
+
 }
 
 function filterMenu() {
