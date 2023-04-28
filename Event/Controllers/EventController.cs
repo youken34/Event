@@ -26,5 +26,21 @@ public class EventController : Controller
         ViewBag.MyEvents = myEvents;
         return View();
     }
+    public IActionResult EventCreator(int eventid)
+    {
+        Users creator = Event.Models.Event.UserCreator(eventid);
+        ViewBag.creator = creator;
+        return View();
+    }
+    public IActionResult Follow(int followerID, int followingID)
+    {
+        string query = "INSERT INTO FOLLOWERS (FollowerID, FollowingID) VALUES(@followerID, @followingID)";
+        SqlCommand command = DatabaseController.OpenConnexion(query);
+        command.Parameters.AddWithValue("@followerID", followerID);
+        command.Parameters.AddWithValue("@followingID", followingID);
+        command.ExecuteNonQuery();
+        Console.WriteLine(Models.Event.MyEvents(followingID.ToString())[0].GetEventId());
+        return RedirectToAction("EventCreator", new { id = Models.Event.MyEvents(followingID.ToString())[0].GetEventId() });
+    }
 
 }

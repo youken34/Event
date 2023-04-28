@@ -26,6 +26,7 @@ public class HomeController : Controller
     {
         List<Models.Event> recentEvents = Models.Event.RecentEvents();
         ViewBag.RecentEvents = recentEvents;
+        ViewBag.Username = Models.Event.UserCreatorName();
         return View();
     }
     public IActionResult ListEvent()
@@ -78,10 +79,16 @@ public class HomeController : Controller
     public IActionResult NewUser()
     {
         if (!(String.IsNullOrEmpty(Request.Form["Email"]) ||
-           String.IsNullOrEmpty(Request.Form["Password"])))
+            String.IsNullOrEmpty(Request.Form["Password"]) ||
+            String.IsNullOrEmpty(Request.Form["Username"]) ||
+            String.IsNullOrEmpty(Request.Form["FirstName"]) ||
+            String.IsNullOrEmpty(Request.Form["LastName"])))
         {
             var Email = Request.Form["Email"].ToString();
             var Password = Request.Form["Password"].ToString();
+            var Username = Request.Form["Username"].ToString();
+            var FirstName = Request.Form["FirstName"].ToString();
+            var LastName = Request.Form["LastName"].ToString();
             bool containsLowercase = Regex.IsMatch(Password, "[a-z]");
             bool containsUppercase = Regex.IsMatch(Password, "[A-Z]");
             bool containsSpecialChar = Regex.IsMatch(Password, @"[^a-zA-Z0-9]");
@@ -90,7 +97,7 @@ public class HomeController : Controller
                 if (EmailAndPasswordAlreadyTaken(Email, Password).Item1 == 0 && EmailAndPasswordAlreadyTaken(Email, Password).Item2 == 0)
                 {
                     Password = DatabaseController.CryptePassword(Password);
-                    Users.Create(Email, Password);
+                    Users.Create(FirstName, LastName, Username, Email, Password);
                     Console.WriteLine("Account created successfully");
                 }
             }
