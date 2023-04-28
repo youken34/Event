@@ -2,6 +2,8 @@
 @{
     ViewData["Title"] = "Home Page";
     var recentEvents = ViewBag.RecentEvents;
+    var username = ViewBag.UserName;
+    var index = 0;
 }
 <div class="img-banner">
     <img src="https://images.unsplash.com/photo-1444210971048-6130cf0c46cf?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1173&q=80" alt="">
@@ -37,8 +39,13 @@
             <p >@item.GetCategory()</p>
             <p>@item.GetLocation()</p>
             <p>@item.GetDate().ToString("yyyy-MM-dd")</p>
+            <a class="username" asp-controller="Event" asp-action="EventCreator" asp-route-eventid="@item.GetEventId()">@username[index]</a>
             <a asp-controller="Event" asp-action="Index" asp-route-id="@item.GetEventId()">See more</a>
             </div>
+            {
+                index++;
+            }
+
         }
 </div>
 </div>

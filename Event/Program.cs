@@ -22,11 +22,20 @@ app.UseRouting();
 
 app.UseAuthorization();
 
+
+
+app.MapControllerRoute(
+    name: "eventcreator",
+    pattern: "Event/EventCreator/{id?}",
+    defaults: new { controller = "Event", action = "EventCreator" }
+);
+
 app.MapControllerRoute(
     name: "event",
     pattern: "Event/{id?}",
     defaults: new { controller = "Event", action = "Index" }
 );
+
 
 app.MapControllerRoute(
     name: "default",

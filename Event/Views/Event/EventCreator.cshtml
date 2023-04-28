@@ -1,0 +1,38 @@
+@using Event.Models;
+@{
+  ViewData["Title"] = "Creator";
+  var creator = ViewBag.creator;
+  var httpContext = new HttpContextAccessor().HttpContext;
+  var cookie = ViewContext.HttpContext.Request.Cookies["User"];
+  Users user = null;
+    if (cookie != null)
+{
+    user = JsonConvert.DeserializeObject<Users>(cookie);
+}
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body onload="footer()">
+    <div class="container mt-6">
+<div class="event">
+  <div class="event-header">
+    <h2 class="event-title">@creator.GetUserName()</h2>
+    <p class="event-category">@creator.GetEmail()</p>
+  </div>
+  <div class="event-body">
+    <p class="event-description">Followers : @creator.GetFollowers()</p>
+    <p class="event-location">Event posted : @creator.GetEventposted()</p>
+    <p class="event-date"><a href="">Other events posted by this person</a></p>
+    <br>
+    <a class="follow mt-5" asp-controller="Event" asp-action="Follow" asp-route-followerID="@user.GetUserID()" asp-route-followingID="@creator.GetUserID()">Follow</a>
+  </div>
+</div>
+</div>
+</body>
+</html>

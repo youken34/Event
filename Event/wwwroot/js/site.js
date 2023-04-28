@@ -53,6 +53,12 @@ function filterMenu() {
     filterOn = !filterOn;
 }
 
+var dropdownmenu = document.getElementsByClassName("dropdown-toggle")[0];
+dropdownmenu.addEventListener("mouseover", function name() {
+    console.log(dropdownmenu)
+    dropdownmenu.style.zIndex = "1000";
+})
+
 
 /* Auto suggestion regarding the location */
 
@@ -75,6 +81,8 @@ function applyBackground(item) {
             break;
         case 'festival':
             img.src = "https://cdn.pixabay.com/photo/2017/07/21/23/57/concert-2527495__480.jpg";
+        case 'party':
+            img.src = "https://t3.ftcdn.net/jpg/02/87/35/70/360_F_287357045_Ib0oYOxhotdjOEHi0vkggpZTQCsz0r19.jpg";
         default:
             break;
     }

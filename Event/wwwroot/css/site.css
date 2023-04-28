@@ -16,8 +16,6 @@ header {
 
 /* Global and common Styles */
 body {
-  position: relative;
-  z-index: -2;
   min-height: 100vh;
   font-family: "Roboto", sans-serif;
   background-color: #F8F7FA;
@@ -26,6 +24,7 @@ body {
 
 /* Header Styles */
 header {
+  z-index: 2;
   position: fixed;
   top: 0;
   left: 0;
@@ -95,6 +94,7 @@ header {
 }
 
 .filter p {
+  color: #1E0A3C;
   font-size: 23px;
   font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
   line-height: 30px;
@@ -199,7 +199,8 @@ input {
 
 input[type="text"],
 input[type="datetime-local"],
-input[type="password"] {
+input[type="password"],
+input[type="email"] {
   width: 100%;
   padding: 10px;
   border: 1px solid #000;
@@ -255,6 +256,7 @@ h1 {
 }
 
 .grid-item {
+  border-radius: 10px;
   height: 400px;
   background-color: #fff;
   color: #000;
@@ -278,7 +280,7 @@ h1 {
   font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
 }
 
-.grid-item a {
+.grid-item a:not(:first-of-type) {
   bottom: 0px;
   position: relative;
   padding: 10px;
@@ -289,6 +291,7 @@ h1 {
   margin-top: auto;
   background-color: #fff;
   border-top: 1px solid grey;
+  border-radius: 0px 0px 10px 10px;
 }
 
 .grid-item a:hover {
@@ -297,6 +300,7 @@ h1 {
 }
 
 .grid-item>img {
+  border-radius: 10px 10px 0px 0px;
   height: 140px;
   width: 310px;
   margin-bottom: 10px;
@@ -317,6 +321,22 @@ h1 {
   color: #605B6D;
 }
 
+.username,
+.follow {
+  border-radius: 5px;
+  text-align: center;
+  text-decoration: none;
+  background-color: #1E0A3C;
+  width: 75px;
+  color: #fff;
+  padding: 5px;
+}
+
+.username {
+  margin-left: 10px;
+}
+
+
 /* Drop Down Menu */
 #push {
   transition: 0.5s;
@@ -328,9 +348,9 @@ h1 {
 
 
 .dropdown .dropdown-menu {
+  transform: translateX(0px);
   position: absolute;
   left: 0;
-  z-index: 3;
 }
 
 .dropdown-item {

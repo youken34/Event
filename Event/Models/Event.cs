@@ -129,7 +129,6 @@ public class Event
 
                 }
                 myevents.Add(eventItem);
-                Console.WriteLine(eventItem.GetDescription(), eventItem.GetLocation);
             }
         }
         data.Close();
@@ -168,6 +167,48 @@ public class Event
         DatabaseController.OpenConnexion(query).Connection.Close();
         return recentEvent;
     }
+    static public Users UserCreator(int eventId)
+    {
+        Users creator = new Users();
+        string query = "SELECT u.UserEmail, u.UserName, u.Eventposted, u.Followers, u.UserID FROM Event e INNER JOIN Users u ON u.UserID = e.UserID WHERE e.EventID = @eventID";
+        SqlCommand command = DatabaseController.OpenConnexion(query);
+        command.Parameters.AddWithValue("@eventID", eventId);
+        SqlDataReader data = command.ExecuteReader();
+        if (data.HasRows)
+        {
+            while (data.Read())
+            {
+                creator.SetEmail(data["UserEmail"].ToString());
+                creator.SetUserName(data["UserName"].ToString());
+                creator.SetEventPosted(Convert.ToInt32(data["Eventposted"]));
+                creator.SetFollowers(Convert.ToInt32(data["Followers"]));
+                creator.SetUserID(Convert.ToInt32(data["UserID"]));
+            }
+        }
+        data.Close();
+        command.Dispose();
+        DatabaseController.OpenConnexion(query).Connection.Close();
+        return creator;
+    }
 
+    static public List<string> UserCreatorName()
+    {
+        List<string> UsercreatorName = new List<string>();
+        String query = "SELECT u.UserName FROM Event e INNER JOIN Users u ON u.UserID = e.UserID WHERE DateEvent >= GETDATE()";
+        SqlCommand command = DatabaseController.OpenConnexion(query);
+        SqlDataReader data = command.ExecuteReader();
+        if (data.HasRows)
+        {
+            while (data.Read())
+            {
+                UsercreatorName.Add(data["Username"].ToString());
+            }
+        }
+
+        data.Close();
+        command.Dispose();
+        DatabaseController.OpenConnexion(query).Connection.Close();
+        return UsercreatorName;
+    }
 
 }
