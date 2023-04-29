@@ -5,10 +5,11 @@
   var httpContext = new HttpContextAccessor().HttpContext;
   var cookie = ViewContext.HttpContext.Request.Cookies["User"];
   Users user = null;
-    if (cookie != null)
-{
+  if (cookie != null)
+  {
     user = JsonConvert.DeserializeObject<Users>(cookie);
-}
+  }
+  var isFollowing = ViewBag.isFollowing;
 }
 
 <!DOCTYPE html>
@@ -30,7 +31,16 @@
     <p class="event-location">Event posted : @creator.GetEventposted()</p>
     <p class="event-date"><a href="">Other events posted by this person</a></p>
     <br>
-    <a class="follow mt-5" asp-controller="Event" asp-action="Follow" asp-route-followerID="@user.GetUserID()" asp-route-followingID="@creator.GetUserID()">Follow</a>
+    @{
+      if (isFollowing == true)
+      {
+          <a class="follow mt-5" asp-controller="Event" asp-action="Unfollow" asp-route-followerID="@user.GetUserID()" asp-route-followingID="@creator.GetUserID()">Unfollow</a>
+      }
+      else
+      {
+          <a class="follow mt-5" asp-controller="Event" asp-action="Follow" asp-route-followerID="@user.GetUserID()" asp-route-followingID="@creator.GetUserID()">Follow</a>
+      }
+    }
   </div>
 </div>
 </div>

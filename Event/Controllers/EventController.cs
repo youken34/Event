@@ -5,6 +5,7 @@ using System.Text;
 using System.Data.SqlClient;
 using Newtonsoft.Json;
 
+
 namespace Event.Controllers;
 
 
@@ -28,19 +29,51 @@ public class EventController : Controller
     }
     public IActionResult EventCreator(int eventid)
     {
+        var cookie = Request.Cookies["User"];
+        Users user = JsonConvert.DeserializeObject<Users>(cookie);
         Users creator = Event.Models.Event.UserCreator(eventid);
+        var isFollowing = false;
+        isFollowing = Models.Followers.isFollowing(user.GetUserID(), creator.GetUserID());
+        ViewBag.isFollowing = isFollowing;
         ViewBag.creator = creator;
         return View();
     }
     public IActionResult Follow(int followerID, int followingID)
     {
-        string query = "INSERT INTO FOLLOWERS (FollowerID, FollowingID) VALUES(@followerID, @followingID)";
-        SqlCommand command = DatabaseController.OpenConnexion(query);
-        command.Parameters.AddWithValue("@followerID", followerID);
-        command.Parameters.AddWithValue("@followingID", followingID);
-        command.ExecuteNonQuery();
-        Console.WriteLine(Models.Event.MyEvents(followingID.ToString())[0].GetEventId());
-        return RedirectToAction("EventCreator", new { id = Models.Event.MyEvents(followingID.ToString())[0].GetEventId() });
+        try
+        {
+            string query = "INSERT INTO FOLLOWERS (FollowerID, FollowingID) VALUES(@followerID, @followingID)";
+            SqlCommand command = DatabaseController.OpenConnexion(query);
+            command.Parameters.AddWithValue("@followerID", followerID);
+            command.Parameters.AddWithValue("@followingID", followingID);
+            command.ExecuteNonQuery();
+            return RedirectToAction("EventCreator", new { eventid = Models.Event.MyEvents(followingID.ToString())[0].GetEventId() });
+        }
+        catch (Exception ex)
+        {
+            // Log the exception here
+            Console.WriteLine(ex.ToString());
+            throw;
+        }
+    }
+    public IActionResult Unfollow(int followerID, int followingID)
+    {
+        Console.WriteLine("test --------------------------------");
+        try
+        {
+            string query = "DELETE FROM FOLLOWERS WHERE FollowerID = @followerID AND followingID = @followingID";
+            SqlCommand command = DatabaseController.OpenConnexion(query);
+            command.Parameters.AddWithValue("@followerID", followerID);
+            command.Parameters.AddWithValue("@followingID", followingID);
+            command.ExecuteNonQuery();
+            return RedirectToAction("EventCreator", new { eventid = Models.Event.MyEvents(followingID.ToString())[0].GetEventId() });
+        }
+        catch (Exception ex)
+        {
+            // Log the exception here
+            Console.WriteLine(ex.ToString());
+            throw;
+        }
     }
 
 }
