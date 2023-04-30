@@ -58,7 +58,6 @@ public class EventController : Controller
     }
     public IActionResult Unfollow(int followerID, int followingID)
     {
-        Console.WriteLine("test --------------------------------");
         try
         {
             string query = "DELETE FROM FOLLOWERS WHERE FollowerID = @followerID AND followingID = @followingID";
