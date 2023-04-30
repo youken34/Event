@@ -23,6 +23,17 @@ app.UseRouting();
 app.UseAuthorization();
 
 
+app.MapControllerRoute(
+    name: "eventfollow",
+    pattern: "Event/Unfollow/{followerID}/{followingID}",
+    defaults: new { controller = "Event", action = "Unfollow" }
+);
+
+app.MapControllerRoute(
+    name: "eventfollow",
+    pattern: "Event/Follow/{followerID}/{followingID}",
+    defaults: new { controller = "Event", action = "Follow" }
+);
 
 app.MapControllerRoute(
     name: "eventcreator",
