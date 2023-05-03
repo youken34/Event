@@ -1,0 +1,6 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<parameters>
+  <parameter name="IIS Web Application Name" description="" value="comeb69-001-site1" tags="IisApp">
+    <parameterEntry kind="ProviderPath" scope="IisApp" match="^C:\\Users\\Côme\\Documents\\GitHub\\EventApp\\Event\\obj\\Release\\net7\.0-windows\\PubTmp\\Out\\$" />
+  </parameter>
+</parameters>

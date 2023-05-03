@@ -67,6 +67,7 @@ public class HomeController : Controller
                 List<Models.Event> recentEvents = Models.Event.RecentEvents();
                 ViewBag.RecentEvents = recentEvents;
                 cookiesController.newConnectedCookies(userconnected, HttpContext.Response);
+                // cookiesController.newConnectedCookiesLocal(userconnected, HttpContext.Response);
                 return RedirectToAction("Index");
             }
             // Redirect permet de non seulement changer la vue, mais également l'url, a contrario de View()

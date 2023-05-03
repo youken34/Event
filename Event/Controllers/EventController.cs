@@ -30,10 +30,14 @@ public class EventController : Controller
     public IActionResult EventCreator(int eventid)
     {
         var cookie = Request.Cookies["User"];
-        Users user = JsonConvert.DeserializeObject<Users>(cookie);
-        Users creator = Event.Models.Event.UserCreator(eventid);
+        Users user = null;
         var isFollowing = false;
-        isFollowing = Models.Followers.isFollowing(user.GetUserID(), creator.GetUserID());
+        Users creator = Event.Models.Event.UserCreator(eventid);
+        if (cookie != null)
+        {
+            user = JsonConvert.DeserializeObject<Users>(cookie);
+            isFollowing = Models.Followers.isFollowing(user.GetUserID(), creator.GetUserID());
+        }
         ViewBag.isFollowing = isFollowing;
         ViewBag.creator = creator;
         return View();
