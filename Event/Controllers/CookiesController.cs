@@ -16,7 +16,7 @@ namespace Event.Controllers;
 
 public class CookiesController : Controller
 {
-    public void newConnectedCookies(Users newUser, HttpResponse response)
+    public void newConnectedCookiesLocal(Users newUser, HttpResponse response)
     {
         JsonSerializerSettings settings = new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore };
         if (newUser != null && response != null)
@@ -30,6 +30,21 @@ public class CookiesController : Controller
             });
         }
 
+    }
+
+    public void newConnectedCookies(Users newUser, HttpResponse response)
+    {
+        JsonSerializerSettings settings = new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore };
+        if (newUser != null && response != null)
+        {
+            string user = JsonConvert.SerializeObject(newUser, settings);
+            response.Cookies.Append("User", user, new CookieOptions
+            {
+                Expires = DateTimeOffset.Now.AddDays(15),
+                Domain = "comeb69-001-site1.btempurl.com",
+                Path = "/"
+            });
+        }
     }
 
     public void CheckConnectedCookies()

@@ -16,7 +16,9 @@ public class DatabaseController : Controller
 {
     public static String getconnexionString()
     {
-        string connectionString = @"SERVER=LAPTOP-CM6ELO5N\MSSQLSERVER01;UID=LAPTOP-CM6ELO5N\\Côme;PWD=;DATABASE=EventDB;TrustServerCertificate=true;Integrated Security=true";
+        /* Data Source=SQL5110.site4now.net;Initial Catalog=db_a98986_comeb69;User Id=db_a98986_comeb69_admin;Password=event210 */
+        /* SERVER=LAPTOP-CM6ELO5N\MSSQLSERVER01;UID=LAPTOP-CM6ELO5N\\Côme;PWD=;DATABASE=EventDB;TrustServerCertificate=true;Integrated Security=true */
+        string connectionString = @"Data Source=SQL5110.site4now.net;Initial Catalog=db_a98986_comeb69;User Id=db_a98986_comeb69_admin;Password=event210";
         return connectionString;
     }
     public static SqlCommand OpenConnexion(string query)

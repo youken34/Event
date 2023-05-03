@@ -1,4 +1,9 @@
 ﻿@using Event.Models
+@using Event
+@using Event.Models
+@using Microsoft.AspNetCore.Http
+@using Newtonsoft.Json
+@using System.Web
 @{
     ViewData["Title"] = "Home Page";
     var recentEvents = ViewBag.RecentEvents;
@@ -6,49 +11,50 @@
     var index = 0;
 }
 
+    <div id="alert">
 
-
-<div class="img-banner">
-    <img src="https://images.unsplash.com/photo-1444210971048-6130cf0c46cf?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1173&q=80" alt="">
-</div>
-@* Filter details menu on the right side *@
-
-<div class="filter-details align-items-center">
-    <div class="filter-tag align-items-center">
-    <p>Category</p>
-    <p>Range</p>
-    <p>This week</p>
-    <label for="free">Free
-    <input name="free" type="checkbox"></input>
-    </label>
     </div>
-    <div class=" apply align-items-center justify-content-center">
-        <a  onclick="applyFilters()">Apply</a>
-    </div>
-</div>
 
-<div class="container" id="push"">
-<div class="d-flex">
-    <div class="filter justify-content-center">
-       <p onclick="filterMenu()">Filter</p> 
+    <div class="img-banner">
+        <img src="https://images.unsplash.com/photo-1444210971048-6130cf0c46cf?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1173&q=80" alt="">
     </div>
-</div>
-<div class="grid-container">
-@foreach (var item in recentEvents)
-{
-                            <div class="grid-item @item.GetCategory().ToLower()" onload="applyBackground('@(item.GetCategory().ToLower())')">
-                            <img src="" alt="">
-                            <h2>@item.GetTitle()</h2>
-                            <p >@item.GetCategory()</p>
-                            <p>@item.GetLocation()</p>
-                            <p>@item.GetDate().ToString("yyyy-MM-dd")</p>
-                            <a class="username" asp-controller="Event" asp-action="EventCreator" asp-route-eventid="@item.GetEventId()">@username[index]</a>
-                            <a asp-controller="Event" asp-action="Index" asp-route-id="@item.GetEventId()">See more</a>
-                            </div>
-    {
-        index++;
-    }
 
-}
-</div>
-</div>
+    <div class="filter-details align-items-center">
+        <div class="filter-tag align-items-center">
+        <p>Category</p>
+        <p>Range</p>
+        <p>This week</p>
+        <label for="free">Free
+        <input name="free" type="checkbox"></input>
+        </label>
+        </div>
+        <div class=" apply align-items-center justify-content-center">
+            <a  onclick="applyFilters()">Apply</a>
+        </div>
+    </div>
+
+    <div class="container" id="push">
+    <div class="d-flex">
+        <div class="filter justify-content-center">
+        <p onclick="filterMenu()">Filter</p> 
+        </div>
+    </div>
+    <div class="grid-container">
+        @foreach (var item in recentEvents)
+        {
+                <div class="grid-item @item.GetCategory().ToLower()" onload="applyBackground('@(item.GetCategory().ToLower())')">
+                <img src="" alt="">
+                <h2>@item.GetTitle()</h2>
+                <p >@item.GetCategory()</p>
+                <p>@item.GetLocation()</p>
+                <p>@item.GetDate().ToString("yyyy-MM-dd")</p>
+                <a class="username" asp-controller="Event" asp-action="EventCreator" asp-route-eventid="@item.GetEventId()">@username[index]</a>
+                <a asp-controller="Event" asp-action="Index" asp-route-id="@item.GetEventId()">See more</a>
+                </div>
+            {
+                index++;
+            }
+
+        }
+    </div>
+    </div>
