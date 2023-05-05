@@ -3,25 +3,31 @@
     ViewData["Title"] = "My Events";
     var myEvents = ViewBag.myEvents;
 }
-<body onload="footer()">
+<body>
     
 
-<div class="container" >
-<div class="text-center">
-    <h1 class="display-4">My Events</h1>
-</div>
 
-<div class="grid-container">
-    @foreach (var item in myEvents)
-    {
-            <div class="grid-item">
+    <div class="container" id="push">
+    <div class="d-flex">
+        <div class="filter justify-content-center">
+        <p onclick="filterMenu()">Filter</p> 
+        </div>
+    </div>
+    <div class="grid-container">
+        @foreach (var item in myEvents)
+        {
+                <div class="grid-item @item.GetCategory().ToLower()" onload="applyBackground('@(item.GetCategory().ToLower())')">
+                <img src="" alt="">
                 <h2>@item.GetTitle()</h2>
-                <p>@item.GetDescription()</p>
-                <p>@item.GetCategory()</p>
+                <p >@item.GetCategory()</p>
                 <p>@item.GetLocation()</p>
                 <p>@item.GetDate().ToString("yyyy-MM-dd")</p>
-            </div>
-    }
-</div>
-</div>
+                <a href="" style="display: none;"></a>
+                <a asp-controller="Event" asp-action="Index" asp-route-id="@item.GetEventId()">See more</a>
+                </div>
+
+        }
+    </div>
+    </div>
+
 </body>

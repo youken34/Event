@@ -33,7 +33,7 @@ var Menufilter = document.querySelector(".filter-details");
 var push = document.getElementById("push");
 var filterOn = false;
 function filterMenuApparition() {
-    push.style.transform = "translateX(-100px)";
+    push.style.transform = "translateX(-105px)";
     Menufilter.style.transform = "translateX(0px)";
 }
 
@@ -70,13 +70,21 @@ document.addEventListener("DOMContentLoaded", function () {
 function applyBackground(item) {
     var img = item.firstElementChild;
     switch (item.getAttribute("class").split(" ")[1]) {
+        case 'tournament':
+            img.src = "https://t4.ftcdn.net/jpg/01/64/83/47/240_F_164834714_2UMLp8c0bszO8T3kpuKjTPBNcmVO8ad0.jpg";
+            break;
         case 'conference':
             img.src = "https://i.pinimg.com/564x/44/d2/da/44d2daf7c1dcec8efdc965d1a3144219.jpg";
             break;
         case 'festival':
             img.src = "https://cdn.pixabay.com/photo/2017/07/21/23/57/concert-2527495__480.jpg";
+            break;
         case 'party':
             img.src = "https://t3.ftcdn.net/jpg/02/87/35/70/360_F_287357045_Ib0oYOxhotdjOEHi0vkggpZTQCsz0r19.jpg";
+            break;
+        case "expo":
+            img.src = "https://www.actexpo.com/wp-content/uploads/2022/10/expo-hall.jpg";
+            break;
         default:
             break;
     }
@@ -129,14 +137,14 @@ function CustomAlert() {
     }
 }
 
- var customAlert = new CustomAlert();
- //window.addEventListener("DOMContentLoaded", function () {
- //    var url = window.location.href;
- //    var expectedUrl = "http://localhost:5114/";
- //    if (url == expectedUrl) {
- //        customAlert.alert('This project is still in process, tasks I am currently working on:', 'Warning');
- //    }
- //})
+var customAlert = new CustomAlert();
+//window.addEventListener("DOMContentLoaded", function () {
+//    var url = window.location.href;
+//    var expectedUrl = "http://localhost:5114/";
+//    if (url == expectedUrl) {
+//        customAlert.alert('This project is still in process, tasks I am currently working on:', 'Warning');
+//    }
+//})
 
 window.addEventListener("DOMContentLoaded", function () {
     var url = window.location.href;

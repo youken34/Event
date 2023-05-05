@@ -125,6 +125,26 @@ public class Users
 
         command.ExecuteReader();
     }
+    public static Users FindUser(int UserID)
+    {
+        Users u = new Users();
+        string query = "Select * from Users where UserID = @UserID";
+        SqlCommand comm = DatabaseController.OpenConnexion(query);
+        comm.Parameters.AddWithValue("@UserID", UserID);
+        SqlDataReader data = comm.ExecuteReader();
+        if (data.HasRows)
+        {
+            data.Read();
+            u.SetUserID(UserID);
+            u.SetFirstName(data["UserFirstName"].ToString());
+            u.SetLastName(data["UserLastName"].ToString());
+            u.SetUserName(data["UserName"].ToString());
+            u.SetEmail(data["UserEmail"].ToString());
+            u.SetEventPosted(Convert.ToInt32(data["EventPosted"]));
+            u.SetFollowers(Convert.ToInt32(data["Followers"]));
+        }
+        return u;
+    }
 
 }
 
