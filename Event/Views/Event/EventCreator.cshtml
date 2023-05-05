@@ -29,12 +29,12 @@
   <div class="event-body">
     <p class="event-description">Followers : @creator.GetFollowers()</p>
     <p class="event-location">Event posted : @creator.GetEventposted()</p>
-    <p class="event-date"><a href="">Other events posted by this person</a></p>
+    <p class="event-date"><a asp-controller="Event" asp-action="otherEvents" asp-route-UserID="@creator.GetUserID()">Other events posted by this person</a></p>
     <br>
     @{
       if (cookie == null)
       {
-        <a class="follow mt-5">Follow</a>
+        <a href="" class="follow mt-5">Follow</a>
       }
       else
       {

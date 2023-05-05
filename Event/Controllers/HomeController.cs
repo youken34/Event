@@ -47,7 +47,21 @@ public class HomeController : Controller
     }
     public IActionResult LogOut()
     {
-        Response.Cookies.Delete("User");
+        //Response.Cookies.Delete("User", new CookieOptions
+        //{
+        //    Domain = "localhost",
+        //    Path = "/",
+        //    HttpOnly = true,
+        //    Secure = true
+        //}
+        //);
+
+        Response.Cookies.Delete("User", new CookieOptions
+        {
+            Domain = "comeb69-001-site1.btempurl.com",
+            Path = "/",
+            HttpOnly = true,
+        });
         return RedirectToAction("Index");
     }
 
@@ -66,7 +80,7 @@ public class HomeController : Controller
                 Users userconnected = new Users(Uservalue.GetUserID(), Uservalue.GetEmail(), Uservalue.GetPassword());
                 List<Models.Event> recentEvents = Models.Event.RecentEvents();
                 ViewBag.RecentEvents = recentEvents;
-                cookiesController.newConnectedCookies(userconnected, HttpContext.Response);
+                cookiesController.newConnectedCookiesLocal(userconnected, HttpContext.Response);
                 // cookiesController.newConnectedCookiesLocal(userconnected, HttpContext.Response);
                 return RedirectToAction("Index");
             }
