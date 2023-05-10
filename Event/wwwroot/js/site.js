@@ -1,6 +1,12 @@
 ﻿// Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
 // for details on configuring this project to bundle and minify static web assets.
+function $(name) {
+    return document.getElementById(name);
+}
 
+function all(name) {
+    return document.querySelectorAll(name);
+}
 /* Icon drop down menu */
 const icon = document.querySelector(".fa-user");
 const menu = document.querySelector(".dropdown-menu");
@@ -61,7 +67,7 @@ function filterMenu() {
 
 document.addEventListener("DOMContentLoaded", function () {
     // Select all the grid items
-    var gridItems = document.querySelectorAll(".grid-item");
+    var gridItems = all(".grid-item");
     // Loop through each grid item
     gridItems.forEach(function (item) {
         applyBackground(item);
@@ -153,3 +159,119 @@ window.addEventListener("DOMContentLoaded", function () {
         customAlert.alert('This project is still in process, tasks I am currently working on:', 'Warning');
     }
 })
+
+/* Filters function 
+---------------------------
+---------------------------
+*/
+const categoryDropdownButton = $("categoryDropdown");
+const categoryDropdownMenu = $('categoryFilters');
+
+// Toggle the dropdown menu when the category dropdown button is clicked
+categoryDropdownButton.addEventListener("click", function () {
+    categoryDropdownMenu.classList.toggle("show");
+});
+
+// Close the dropdown menu if the user clicks outside of it
+window.addEventListener("click", function (event) {
+    if (!event.target.matches(".dropdown-toggle")) {
+        const dropdowns = document.getElementsByClassName("dropdown-menu");
+        for (let i = 0; i < dropdowns.length; i++) {
+            const dropdown = dropdowns[i];
+            if (dropdown.classList.contains("show")) {
+                dropdown.classList.remove("show");
+            }
+        }
+    }
+});
+
+/* Week filter 
+----------------
+*/
+const thisWeek = document.getElementById('thisweek')
+thisWeek.addEventListener('change', function () {
+    if (thisWeek.checked) {
+        sameweek()
+    } else {
+        adjust();
+    }
+});
+
+
+function sameweek() {
+    // get list of all events
+    const eventItems = all('.grid-item');
+
+    // filter events that are not in the same week as now
+    const now = new Date();
+    const weekStart = new Date(now.getFullYear(), now.getMonth(), now.getDate() - now.getDay());
+    const weekEnd = new Date(now.getFullYear(), now.getMonth(), now.getDate() - now.getDay() + 6);
+    eventItems.forEach(function (item) {
+        const itemDate = new Date(item.querySelector('p:nth-of-type(3)').textContent);
+        if (itemDate < weekStart || itemDate > weekEnd) {
+            item.style.display = 'none';
+        } else {
+            item.style.display = 'grid';
+        }
+    });
+
+};
+
+
+
+/* Category filters
+-------------------
+-------------------
+*/
+var inputCheked = [false, false, false, false, false]
+const category = all('input[name="category"]');
+
+categoryDropdownMenu.addEventListener("click", function () {
+    for (let i = 0; i < category.length; i++) {
+        category[i].addEventListener("change", function () {
+            const parent = this.parentNode;
+            var index = oddToIndex(Array.prototype.indexOf.call(categoryDropdownMenu.childNodes, parent));
+            applyFilters(category[i], index)
+        })
+    }
+})
+
+
+function applyFilters(input, index) {
+    removeCategories();
+    if (input.checked) {
+        inputCheked[index] = true
+    } else {
+        inputCheked[index] = false
+    }
+    adjust();
+};
+const gridItems = all('.grid-item');
+
+function removeCategories() {
+    gridItems.forEach(function (item) {
+        item.style.display = 'none';
+    })
+}
+function displayCategories(category) {
+    const categories = all(`.${category}`)
+    categories.forEach(function (item) {
+        item.style.display = 'grid';
+    })
+}
+function oddToIndex(number) {
+    return (number - 1) / 2;
+}
+function adjust() {
+    var indexCategory = 0
+    category.forEach(function (item) {
+        if (inputCheked[indexCategory] === true) {
+            displayCategories(item.nextElementSibling.textContent.toLowerCase())
+        }
+        indexCategory++;
+    })
+}
+
+
+
+

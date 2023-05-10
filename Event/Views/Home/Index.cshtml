@@ -19,19 +19,45 @@
         <img src="https://images.unsplash.com/photo-1444210971048-6130cf0c46cf?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1173&q=80" alt="">
     </div>
 
-    <div class="filter-details align-items-center">
-        <div class="filter-tag align-items-center">
-        <p>Category</p>
-        <p>Range</p>
-        <p>This week</p>
-        <label for="free">Free
-        <input name="free" type="checkbox"></input>
-        </label>
+<div class="filter-details align-items-center">
+  <div class="filter-tag">
+    <div class="dropdown" style="margin-bottom: -13px;">
+      <button class="dropdown-toggle" type="button" id="categoryDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        Category
+      </button>
+      <div id="categoryFilters" class="dropdown-menu" aria-labelledby="categoryDropdown">
+        <div class="dropdown-item">
+          <input id="festival" type="checkbox" id="festival" name="category" value="festival">
+          <label for="festival">Festival</label>
         </div>
-        <div class=" apply align-items-center justify-content-center">
-            <a  onclick="applyFilters()">Apply</a>
+        <div class="dropdown-item">
+          <input id="tournament" type="checkbox" id="tournament" name="category" value="tournament">
+          <label for="tournament">Tournament</label>
         </div>
+        <div class="dropdown-item">
+          <input id="party" type="checkbox" id="party" name="category" value="party">
+          <label for="party">Party</label>
+        </div>
+        <div class="dropdown-item">
+          <input id="conference" type="checkbox" id="conference" name="category" value="conference">
+          <label for="conference">Conference</label>
+        </div>
+        <div class="dropdown-item">
+          <input id="expo" type="checkbox" id="expo" name="category" value="expo">
+          <label for="expo">Expo</label>
+        </div>
+      </div>
     </div>
+    <div class="dropdown-item">
+    <input id="thisweek" name="thisweek" type="checkbox"></input>
+    <label for="thisweek">This week</label>
+    </div>
+    <div class="dropdown-item">
+    <input name="free" type="checkbox"></input>
+    <label for="free">Free</label>
+    </div>
+  </div>
+</div>
 
     <div class="container" id="push">
     <div class="d-flex">
@@ -42,15 +68,15 @@
     <div class="grid-container">
         @foreach (var item in recentEvents)
         {
-                    <div class="grid-item @item.GetCategory().ToLower()" onload="applyBackground('@(item.GetCategory().ToLower())')">
-                    <img src="" alt="">
-                    <h2>@item.GetTitle()</h2>
-                    <p >@item.GetCategory()</p>
-                    <p>@item.GetLocation()</p>
-                    <p>@item.GetDate().ToString("yyyy-MM-dd")</p>
-                    <a class="username" asp-controller="Event" asp-action="EventCreator" asp-route-eventid="@item.GetEventId()">@username[index]</a>
-                    <a asp-controller="Event" asp-action="Index" asp-route-id="@item.GetEventId()">See more</a>
-                    </div>
+            <div class="grid-item @item.GetCategory().ToLower()" onload="applyBackground('@(item.GetCategory().ToLower())')">
+            <img src="" alt="">
+            <h2>@item.GetTitle()</h2>
+            <p >@item.GetCategory()</p>
+            <p>@item.GetLocation()</p>
+            <p>@item.GetDate().ToString("yyyy-MM-dd")</p>
+            <a class="username" asp-controller="Event" asp-action="EventCreator" asp-route-eventid="@item.GetEventId()">@username[index]</a>
+            <a asp-controller="Event" asp-action="Index" asp-route-id="@item.GetEventId()">See more</a>
+            </div>
             {
                 index++;
             }
