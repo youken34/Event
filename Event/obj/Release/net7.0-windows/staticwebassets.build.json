@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "rGrSOoFClo4O9JNDhBoF79V10+4RscPuJJ6Vt016F00=",
+  "Hash": "PEUxIloKeRRlQvGZVjCMMbgPLz2aI2tWq8/nZ68KyYI=",
   "Source": "Event",
   "BasePath": "_content/Event",
   "Mode": "Default",
@@ -1086,6 +1086,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\lib\\jquery-validation-unobtrusive\\LICENSE.txt"
+    },
+    {
+      "Identity": "C:\\Users\\Côme\\Documents\\GitHub\\EventApp\\Event\\wwwroot\\sqlQuery\\queries.sql",
+      "SourceId": "Event",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\Côme\\Documents\\GitHub\\EventApp\\Event\\wwwroot\\",
+      "BasePath": "_content/Event",
+      "RelativePath": "sqlQuery/queries.sql",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\sqlQuery\\queries.sql"
     }
   ]
 }

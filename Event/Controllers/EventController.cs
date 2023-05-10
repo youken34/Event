@@ -37,8 +37,10 @@ public class EventController : Controller
             user = JsonConvert.DeserializeObject<Users>(cookie);
             isFollowing = Models.Followers.isFollowing(user.GetUserID(), creator.GetUserID());
         }
+        List<Event.Models.Event> recommendation = Event.Models.Event.GetRecommendation(creator.GetUserID().ToString());
         ViewBag.isFollowing = isFollowing;
         ViewBag.creator = creator;
+        ViewBag.recommendation = recommendation;
         return View();
     }
     public IActionResult Follow(int followerID, int followingID)
