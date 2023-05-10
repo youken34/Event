@@ -110,7 +110,7 @@ function CustomAlert() {
 
     this.alert = function (message, title) {
         divid = document.getElementById('alert');
-        divid.innerHTML += '<div id = "dialogoverlay"></div><div id="dialogbox" class="slit-in-vertical"><div style="background-color: #1E0A3C"><div id="dialogboxhead"></div><div id="dialogboxbody"><ul><li>Responsive & overall design</li><li>Filters function</li><li>Miscelleanous improvements</li></ul></div><div id="dialogboxfoot"></div></div></div>';
+        divid.innerHTML += '<div id = "dialogoverlay"></div><div id="dialogbox" class="slit-in-vertical"><div style="background-color: #1E0A3C"><div id="dialogboxhead"></div><div id="dialogboxbody"><ul><li>Responsive & overall design</li><li>Integrate Google Maps API to filter events based on distance and suggest locations when adding new events</li><li>Recommendation system</li><li>Miscelleanous improvements</li></ul></div><div id="dialogboxfoot"></div></div></div>';
 
         let dialogoverlay = document.getElementById('dialogoverlay');
         let dialogbox = document.getElementById('dialogbox');
@@ -144,13 +144,13 @@ function CustomAlert() {
 }
 
 var customAlert = new CustomAlert();
-//window.addEventListener("DOMContentLoaded", function () {
-//    var url = window.location.href;
-//    var expectedUrl = "http://localhost:5114/";
-//    if (url == expectedUrl) {
-//        customAlert.alert('This project is still in process, tasks I am currently working on:', 'Warning');
-//    }
-//})
+// window.addEventListener("DOMContentLoaded", function () {
+//     var url = window.location.href;
+//     var expectedUrl = "http://localhost:5114/";
+//     if (url == expectedUrl) {
+//         customAlert.alert('This project is still in process, tasks I am currently working on:', 'Warning');
+//     }
+// })
 
 window.addEventListener("DOMContentLoaded", function () {
     var url = window.location.href;
@@ -164,113 +164,142 @@ window.addEventListener("DOMContentLoaded", function () {
 ---------------------------
 ---------------------------
 */
-const categoryDropdownButton = $("categoryDropdown");
-const categoryDropdownMenu = $('categoryFilters');
+console.log(window.location.href)
+if (window.location.href == "http://localhost:5114/" || window.location.href == "http://comeb69-001-site1.btempurl.com/") {
+    const categoryDropdownButton = $("categoryDropdown");
+    const categoryDropdownMenu = $('categoryFilters');
 
-// Toggle the dropdown menu when the category dropdown button is clicked
-categoryDropdownButton.addEventListener("click", function () {
-    categoryDropdownMenu.classList.toggle("show");
-});
+    // Toggle the dropdown menu when the category dropdown button is clicked
+    categoryDropdownButton.addEventListener("click", function () {
+        categoryDropdownMenu.classList.toggle("show");
+    });
 
-// Close the dropdown menu if the user clicks outside of it
-window.addEventListener("click", function (event) {
-    if (!event.target.matches(".dropdown-toggle")) {
-        const dropdowns = document.getElementsByClassName("dropdown-menu");
-        for (let i = 0; i < dropdowns.length; i++) {
-            const dropdown = dropdowns[i];
-            if (dropdown.classList.contains("show")) {
-                dropdown.classList.remove("show");
+    // Close the dropdown menu if the user clicks outside of it
+    categoryDropdownButton.addEventListener("click", function (event) {
+        if (!event.target.matches(".dropdown-toggle")) {
+            const dropdowns = document.getElementsByClassName("dropdown-menu");
+            for (let i = 0; i < dropdowns.length; i++) {
+                const dropdown = dropdowns[i];
+                if (dropdown.classList.contains("show")) {
+                    dropdown.classList.remove("show");
+                }
             }
-        }
-    }
-});
-
-/* Week filter 
-----------------
-*/
-const thisWeek = document.getElementById('thisweek')
-thisWeek.addEventListener('change', function () {
-    if (thisWeek.checked) {
-        sameweek()
-    } else {
-        adjust();
-    }
-});
-
-
-function sameweek() {
-    // get list of all events
-    const eventItems = all('.grid-item');
-
-    // filter events that are not in the same week as now
-    const now = new Date();
-    const weekStart = new Date(now.getFullYear(), now.getMonth(), now.getDate() - now.getDay());
-    const weekEnd = new Date(now.getFullYear(), now.getMonth(), now.getDate() - now.getDay() + 6);
-    eventItems.forEach(function (item) {
-        const itemDate = new Date(item.querySelector('p:nth-of-type(3)').textContent);
-        if (itemDate < weekStart || itemDate > weekEnd) {
-            item.style.display = 'none';
-        } else {
-            item.style.display = 'grid';
         }
     });
 
-};
+    /* Week filter 
+    ----------------
+    */
+    const thisWeek = document.getElementById('thisweek')
+    thisWeek.addEventListener('change', function () {
+        if (thisWeek.checked) {
+            sameweek(all(".grid-item:not([style*='display: none'])"))
+        } else {
+            adjust();
+        }
+    });
+
+
+    function sameweek(eventItems) {
+        // filter events that are not in the same week as now
+        const now = new Date();
+        const weekStart = new Date(now.getFullYear(), now.getMonth(), now.getDate() - now.getDay());
+        const weekEnd = new Date(now.getFullYear(), now.getMonth(), now.getDate() - now.getDay() + 6);
+        eventItems.forEach(function (item) {
+            const itemDate = new Date(item.querySelector('p:nth-of-type(3)').textContent);
+            if (itemDate < weekStart || itemDate > weekEnd) {
+                item.style.display = 'none';
+            } else {
+                item.style.display = 'flex';
+            }
+        });
+
+    };
 
 
 
-/* Category filters
--------------------
--------------------
-*/
-var inputCheked = [false, false, false, false, false]
-const category = all('input[name="category"]');
+    /* Category filters
+    -------------------
+    -------------------
+    */
+    var inputCheked = [false, false, false, false, false]
+    const category = all('input[name="category"]');
 
-categoryDropdownMenu.addEventListener("click", function () {
-    for (let i = 0; i < category.length; i++) {
-        category[i].addEventListener("change", function () {
-            const parent = this.parentNode;
-            var index = oddToIndex(Array.prototype.indexOf.call(categoryDropdownMenu.childNodes, parent));
-            applyFilters(category[i], index)
+    categoryDropdownMenu.addEventListener("click", function () {
+        for (let i = 0; i < category.length; i++) {
+            category[i].addEventListener("change", function () {
+                const parent = this.parentNode;
+                var index = oddToIndex(Array.prototype.indexOf.call(categoryDropdownMenu.childNodes, parent));
+                applyFilters(category[i], index)
+            })
+        }
+    })
+
+
+    function applyFilters(input, index) {
+        removeCategories();
+        if (input.checked) {
+            inputCheked[index] = true
+        } else {
+            inputCheked[index] = false
+        }
+        adjust();
+    };
+    const gridItems = all('.grid-item');
+
+    function removeCategories() {
+        gridItems.forEach(function (item) {
+            item.style.display = 'none';
         })
     }
-})
-
-
-function applyFilters(input, index) {
-    removeCategories();
-    if (input.checked) {
-        inputCheked[index] = true
-    } else {
-        inputCheked[index] = false
-    }
-    adjust();
-};
-const gridItems = all('.grid-item');
-
-function removeCategories() {
-    gridItems.forEach(function (item) {
-        item.style.display = 'none';
-    })
-}
-function displayCategories(category) {
-    const categories = all(`.${category}`)
-    categories.forEach(function (item) {
-        item.style.display = 'grid';
-    })
-}
-function oddToIndex(number) {
-    return (number - 1) / 2;
-}
-function adjust() {
-    var indexCategory = 0
-    category.forEach(function (item) {
-        if (inputCheked[indexCategory] === true) {
-            displayCategories(item.nextElementSibling.textContent.toLowerCase())
+    function displayCategories(category) {
+        const categories = all(`.${category}`)
+        categories.forEach(function (item) {
+            item.style.display = 'flex';
+        })
+        if (thisWeek.checked) {
+            sameweek(all(".grid-item:not([style*='display: none'])"));
         }
-        indexCategory++;
+
+    }
+    function oddToIndex(number) {
+        return (number - 1) / 2;
+    }
+    function adjust() {
+        var isInputEmpty = false
+        var indexCategory = 0
+        category.forEach(function (item) {
+            if (inputCheked[indexCategory] === true) {
+                displayCategories(item.nextElementSibling.textContent.toLowerCase())
+                isInputEmpty = true
+            }
+            indexCategory++;
+        })
+        if (isInputEmpty == false) {
+            if (!thisWeek.checked) {
+                displayCategories('grid-item')
+            }
+            else {
+                sameweek(all(".grid-item"));
+            }
+        }
+    }
+}
+/* Error messages form */
+if (window.location.href == "http://localhost:5114/Home/ListEvent" || window.location.href == "http://comeb69-001-site1.btempurl.com/Home/ListEvent") {
+    const title = $('title');
+    const titleError = $('title-error');
+    title.addEventListener('input', (event) => {
+        const value = event.target.value;
+        const length = value.length;
+        if (length > 20) {
+            titleError.style.display = 'block';
+        } else {
+            titleError.style.display = 'none';
+        }
     })
 }
+
 
 
 

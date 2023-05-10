@@ -135,7 +135,9 @@ public class HomeController : Controller
             String.IsNullOrEmpty(Request.Form["Description"]) ||
             String.IsNullOrEmpty(Request.Form["Category"]) ||
             String.IsNullOrEmpty(Request.Form["Location"]) ||
+            String.IsNullOrEmpty(Request.Form["DateEvent"]) ||
             Request.Form["DateEvent"].GetType() == typeof(DateTime)))
+
         {
             // retrieve the form data
             var title = Request.Form["Title"].ToString();

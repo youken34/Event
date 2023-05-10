@@ -127,10 +127,11 @@ header {
 }
 
 .filter-tag p,
-.filter-tag label {
+.filter-tag label,
+.filter-tag button {
   margin-top: 20px;
   font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
-  border-bottom: 2px solid #b1b1b1;
+  /* border-bottom: 2px solid #b1b1b1; */
   font-size: 25px;
 }
 
@@ -342,12 +343,22 @@ h1 {
   transition: 0.5s;
 }
 
+#categoryButton {
+  display: block;
+  padding: 0.25rem 1rem;
+}
+
+#categoryFilters {
+  position: relative;
+  border: none;
+}
+
 .dropdown-toggle::after {
   display: none;
 }
 
 
-.dropdown .dropdown-menu {
+.dropdown .dropdown-menu:not(:first-of-type) {
   transform: translateX(0px);
   position: absolute;
   left: 0;

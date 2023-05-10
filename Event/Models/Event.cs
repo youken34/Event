@@ -16,7 +16,7 @@ public class Event
     private int EventId { get; set; }
     private string Title { get; set; }
     private string Description { get; set; }
-    private enum TypeofCategory
+    public enum TypeofCategory
     {
         Festival,
         Tournament,
@@ -59,6 +59,37 @@ public class Event
         return DateEvent;
     }
 
+
+    public void SetEventId(int eventId)
+    {
+        EventId = eventId;
+    }
+
+    public void SetTitle(string title)
+    {
+        Title = title;
+    }
+
+    public void SetDescription(string description)
+    {
+        Description = description;
+    }
+
+    public void SetCategory(TypeofCategory category)
+    {
+        Category = category;
+    }
+
+    public void SetLocation(string location)
+    {
+        Location = location;
+    }
+
+    public void SetDate(DateTime date)
+    {
+        DateEvent = date;
+    }
+
     public static Event EventDetails(int EventID)
     {
         Event eventdetails = new Event();
@@ -96,13 +127,7 @@ public class Event
         command.Parameters.AddWithValue("@Location", Location);
         command.Parameters.AddWithValue("@DateEvent", DateEvent.ToString("MMM dd yyyy h:mmtt", CultureInfo.InvariantCulture));
         command.Parameters.AddWithValue("@UserID", UserID);
-        SqlDataReader data = command.ExecuteReader();
-
-        while (data.Read())
-        {
-            Console.WriteLine($"Values added : Title : {data["Title"]}, Description : {data["Description"]}, Category : {data["Category"]}, Location : {data["Location"]}, Date : {data["DateEvent"]}");
-        }
-        data.Close();
+        command.ExecuteNonQuery();
         command.Dispose();
     }
     public static List<Event> MyEvents(string UserID)
@@ -209,6 +234,34 @@ public class Event
         command.Dispose();
         DatabaseController.OpenConnexion(query).Connection.Close();
         return UsercreatorName;
+    }
+    public static List<Event> GetRecommendation(string UserID)
+    {
+        List<Event> recommendation = new List<Event>();
+        string query = " select top(3) * from Event WHERE UserID = @UserID ORDER BY NEWID()";
+        SqlCommand command = DatabaseController.OpenConnexion(query);
+        command.Parameters.AddWithValue("@UserID", UserID);
+        SqlDataReader data = command.ExecuteReader();
+        if (data.HasRows)
+        {
+            while (data.Read())
+            {
+                Event e = new Event();
+                e.EventId = Convert.ToInt32(data["EventID"]);
+                e.Title = data["Title"].ToString();
+                e.Description = data["Description"].ToString();
+                e.Location = data["Location"].ToString();
+                e.DateEvent = Convert.ToDateTime(data["DateEvent"]);
+                var categoryString = data["Category"].ToString();
+                if (Enum.TryParse(categoryString, out TypeofCategory category))
+                {
+                    e.Category = category;
+
+                }
+                recommendation.Add(e);
+            }
+        }
+        return recommendation;
     }
 
 }

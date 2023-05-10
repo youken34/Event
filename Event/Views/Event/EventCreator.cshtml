@@ -10,6 +10,8 @@
     user = JsonConvert.DeserializeObject<Users>(cookie);
   }
   var isFollowing = ViewBag.isFollowing;
+  var index = 0;
+  var recommendation = ViewBag.recommendation;
 }
 
 <!DOCTYPE html>
@@ -19,8 +21,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
-<body onload="footer()">
-    <div class="container mt-6">
+<body>
+<div class="container mt-6">
 <div class="event">
   <div class="event-header">
     <h2 class="event-title">@creator.GetUserName()</h2>
@@ -29,7 +31,6 @@
   <div class="event-body">
     <p class="event-description">Followers : @creator.GetFollowers()</p>
     <p class="event-location">Event posted : @creator.GetEventposted()</p>
-    <p class="event-date"><a asp-controller="Event" asp-action="otherEvents" asp-route-UserID="@creator.GetUserID()">Other events posted by this person</a></p>
     <br>
     @{
       if (cookie == null)
@@ -49,8 +50,29 @@
       }
       
     }
+     
   </div>
 </div>
+ <div class="grid-container">
+    @foreach (var item in recommendation)
+    {
+              <div class="grid-item @item.GetCategory().ToLower()" onload="applyBackground('@(item.GetCategory().ToLower())')">
+              <img src="" alt="">
+              <h2>@item.GetTitle()</h2>
+              <p >@item.GetCategory()</p>
+              <p>@item.GetLocation()</p>
+              <p>@item.GetDate().ToString("yyyy-MM-dd")</p>
+              <a href="" style="display: none;"></a>
+              <a asp-controller="Event" asp-action="Index" asp-route-id="@item.GetEventId()">See more</a>
+              </div>
+      {
+        index++;
+      }
+
+    }
+    </div>
+    <p class="event-date"><a asp-controller="Event" asp-action="otherEvents" asp-route-UserID="@creator.GetUserID()">See more events posted by this person</a></p>
+
 </div>
 </body>
 </html>
