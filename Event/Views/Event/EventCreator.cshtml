@@ -22,7 +22,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 <body>
-<div class="container mt-6">
+  <div id="alert">
+
+    </div>
+<div class="container mt-6" id="topError">
 <div class="event">
   <div class="event-header">
     <h2 class="event-title">@creator.GetUserName()</h2>
@@ -35,7 +38,14 @@
     @{
       if (cookie == null)
       {
-        <a href="" class="follow mt-5">Follow</a>
+          <button style="border: none;" class="follow "onclick= "followAlert()">Follow</button>
+          <div id= "dialog-container" class= "dialog-container">
+              <div class= "dialog-header">Custom Alert Dialog</div>
+              <div id= "dialog-body" class= "dialog-body">This is the custom alert message. Click Ok to close this.</div>
+              <div class= "dialog-footer">
+                  <a onclick= "followAlert">Ok</a>
+          </div>
+          </div>
       }
       else
       {
@@ -53,7 +63,8 @@
      
   </div>
 </div>
- <div class="grid-container">
+ <div class="grid-container" style="grid-template-columns: repeat(3, 1fr);
+    grid-gap: 179px;">
     @foreach (var item in recommendation)
     {
               <div class="grid-item @item.GetCategory().ToLower()" onload="applyBackground('@(item.GetCategory().ToLower())')">
@@ -71,7 +82,7 @@
 
     }
     </div>
-    <p class="event-date"><a asp-controller="Event" asp-action="otherEvents" asp-route-UserID="@creator.GetUserID()">See more events posted by this person</a></p>
+        <a class="follow" asp-controller="Event" asp-action="otherEvents" asp-route-UserID="@creator.GetUserID()">See more events posted by this person</a>
 
 </div>
 </body>

@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "aIFxyqTn65qqORWArbLk3Cazt8ZW0bwGs5WDXO8G/KB7gMe8xpR6gv0gbeekT/oOxWeqJgcgjUjalb805NG2/A==",
+  "dgSpecHash": "YuBabQ+FN0mi4vmYnlbfkBdEcYw0f9r2Yh9EIXZMNhhM2bCZjBiVM8dyRSkvW6+Wt6orzUG1jEX34cRW/TULaQ==",
   "success": true,
-  "projectFilePath": "C:\\Users\\Côme\\Documents\\GitHub\\EventApp\\Event\\Event.csproj",
+  "projectFilePath": "C:\\Users\\Côme\\Documents\\GitHub\\EventApp\\event\\Event.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Côme\\.nuget\\packages\\microsoft.aspnetcore.http\\2.2.2\\microsoft.aspnetcore.http.2.2.2.nupkg.sha512",
     "C:\\Users\\Côme\\.nuget\\packages\\microsoft.aspnetcore.http.abstractions\\2.2.0\\microsoft.aspnetcore.http.abstractions.2.2.0.nupkg.sha512",
