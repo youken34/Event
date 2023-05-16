@@ -47,21 +47,21 @@ public class HomeController : Controller
     }
     public IActionResult LogOut()
     {
-        //Response.Cookies.Delete("User", new CookieOptions
-        //{
-        //    Domain = "localhost",
-        //    Path = "/",
-        //    HttpOnly = true,
-        //    Secure = true
-        //}
-        //);
-
         Response.Cookies.Delete("User", new CookieOptions
         {
-            Domain = "comeb69-001-site1.btempurl.com",
+            Domain = "localhost",
             Path = "/",
             HttpOnly = true,
-        });
+            Secure = true
+        }
+        );
+
+        // Response.Cookies.Delete("User", new CookieOptions
+        // {
+        //     Domain = "comeb69-001-site1.btempurl.com",
+        //     Path = "/",
+        //     HttpOnly = true,
+        // });
         return RedirectToAction("Index");
     }
 
