@@ -159,7 +159,7 @@ window.addEventListener("DOMContentLoaded", function () {
     var url = window.location.href;
     var expectedUrl = "http://comeb69-001-site1.btempurl.com/";
     if (url == expectedUrl) {
-        customAlert.alert('This project is still in process, tasks I am currently working on:', 'Warning', '<div id = "dialogoverlay"></div><div id="dialogbox" class="slit-in-vertical"><div style="background-color: #1E0A3C"><div id="dialogboxhead"></div><div id="dialogboxbody"><ul><li>Responsive & overall design</li><li>Integrate Google Maps API to filter events based on distance and suggest locations when adding new events</li><li>Recommendation system</li><li>Miscelleanous improvements</li></ul></div><div id="dialogboxfoot"></div></div></div>', false);
+        customAlert.alert('This project is still in process, tasks I am currently working on:', 'Warning', '<div id = "dialogoverlay"></div><div id="dialogbox" class="slit-in-vertical"><div style="background-color: #1E0A3C"><div id="dialogboxhead"></div><div id="dialogboxbody"><ul><li>Responsive & overall design</li><li>Integrate Google Maps API to filter events based on distance and make predictions while adding new event\'s locations</li><li>Recommendation system</li><li>Miscelleanous improvements</li></ul></div><div id="dialogboxfoot"></div></div></div>', false);
     }
 })
 
@@ -199,6 +199,7 @@ if (window.location.href == "http://localhost:5114/" || window.location.href == 
         } else {
             adjust();
         }
+        noEventMessage();
     });
 
 
@@ -228,13 +229,16 @@ if (window.location.href == "http://localhost:5114/" || window.location.href == 
     const category = all('input[name="category"]');
 
     categoryDropdownMenu.addEventListener("click", function () {
+
         for (let i = 0; i < category.length; i++) {
             category[i].addEventListener("change", function () {
                 const parent = this.parentNode;
                 var index = oddToIndex(Array.prototype.indexOf.call(categoryDropdownMenu.childNodes, parent));
                 applyFilters(category[i], index)
+                noEventMessage();
             })
         }
+
     })
 
 
@@ -246,6 +250,7 @@ if (window.location.href == "http://localhost:5114/" || window.location.href == 
             inputCheked[index] = false
         }
         adjust();
+
     };
     const gridItems = all('.grid-item');
 
@@ -285,8 +290,43 @@ if (window.location.href == "http://localhost:5114/" || window.location.href == 
                 sameweek(all(".grid-item"));
             }
         }
+
+
     }
 }
+
+function noEventMessage() {
+
+    if ([...all(".grid-item")].filter(element => element.style.display == "flex").length === 0) {
+        if ($('noEvent') == null) {
+            createNoEvents();
+        }
+    }
+    else {
+        removeNoEvents();
+    }
+
+
+}
+
+function createNoEvents() {
+    const noEvents = document.createElement('div');
+    noEvents.id = "noEvent"
+    noEvents.style.width = "100%";
+    noEvents.style.fontSize = "22px"
+    noEvents.style.position = "absolute"
+    noEvents.style.justifyContent = "center";
+    noEvents.style.lineHeight = "0px";
+    noEvents.style.fontFamily = "fantasy";
+    noEvents.style.display = "flex";
+    noEvents.textContent = 'There is no events available with the current filter(s), try to remove some';
+    $("grid-container").appendChild(noEvents);
+}
+
+function removeNoEvents() {
+    $("grid-container").removeChild($("noEvent"));
+}
+
 /* Error messages form */
 if (window.location.href == "http://localhost:5114/Home/ListEvent" || window.location.href == "http://comeb69-001-site1.btempurl.com/Home/ListEvent") {
     const title = $('title');
