@@ -65,17 +65,17 @@
         <p onclick="filterMenu()">Filter</p> 
         </div>
     </div>
-    <div class="grid-container">
+    <div class="grid-container" id="grid-container">
     @foreach (var item in recentEvents)
     {
-              <div class="grid-item @item.GetCategory().ToLower()" onload="applyBackground('@(item.GetCategory().ToLower())')">
-              <img src="" alt="">
-              <h2>@item.GetTitle()</h2>
-              <p >@item.GetCategory()</p>
-              <p>@item.GetLocation()</p>
-              <p>@item.GetDate().ToString("yyyy-MM-dd")</p>
-              <a class="username" asp-controller="Event" asp-action="EventCreator" asp-route-eventid="@item.GetEventId()">@username[index]</a>
-              <a asp-controller="Event" asp-action="Index" asp-route-id="@item.GetEventId()">See more</a>
+                  <div class="grid-item @item.GetCategory().ToLower()" onload="applyBackground('@(item.GetCategory().ToLower())')">
+                  <img src="" alt="">
+                  <h2>@item.GetTitle()</h2>
+                  <p >@item.GetCategory()</p>
+                  <p>@item.GetLocation()</p>
+                  <p style="color: #0d4576;">@item.GetDate().ToString("ddd, MMM d, h:mm tt", new System.Globalization.CultureInfo("en-US"))</p>
+                  <a class="username" asp-controller="Event" asp-action="EventCreator" asp-route-eventid="@item.GetEventId()">@username[index]</a>
+                  <a asp-controller="Event" asp-action="Index" asp-route-id="@item.GetEventId()">See more</a>
               </div>
       {
         index++;
