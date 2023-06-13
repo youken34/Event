@@ -108,12 +108,15 @@ function footer() {
 /*Alert function */
 function CustomAlert() {
 
-    this.alert = function (message, title) {
-        divid = document.getElementById('alert');
-        divid.innerHTML += '<div id = "dialogoverlay"></div><div id="dialogbox" class="slit-in-vertical"><div style="background-color: #1E0A3C"><div id="dialogboxhead"></div><div id="dialogboxbody"><ul><li>Responsive & overall design</li><li>Integrate Google Maps API to filter events based on distance and suggest locations when adding new events</li><li>Recommendation system</li><li>Miscelleanous improvements</li></ul></div><div id="dialogboxfoot"></div></div></div>';
+    this.alert = function (message, title, html, disposable) {
+        divid = $('alert');
+        divid.innerHTML += html;
+        if (disposable) {
+            document.getElementById('dialogboxbody').innerHTML = "";
 
-        let dialogoverlay = document.getElementById('dialogoverlay');
-        let dialogbox = document.getElementById('dialogbox');
+        }
+        let dialogoverlay = $('dialogoverlay');
+        let dialogbox = $('dialogbox');
 
         dialogbox.style.zIndex = "3";
         dialogoverlay.style.zIndex = "2";
@@ -156,7 +159,7 @@ window.addEventListener("DOMContentLoaded", function () {
     var url = window.location.href;
     var expectedUrl = "http://comeb69-001-site1.btempurl.com/";
     if (url == expectedUrl) {
-        customAlert.alert('This project is still in process, tasks I am currently working on:', 'Warning');
+        customAlert.alert('This project is still in process, tasks I am currently working on:', 'Warning', '<div id = "dialogoverlay"></div><div id="dialogbox" class="slit-in-vertical"><div style="background-color: #1E0A3C"><div id="dialogboxhead"></div><div id="dialogboxbody"><ul><li>Responsive & overall design</li><li>Integrate Google Maps API to filter events based on distance and suggest locations when adding new events</li><li>Recommendation system</li><li>Miscelleanous improvements</li></ul></div><div id="dialogboxfoot"></div></div></div>', false);
     }
 })
 
@@ -164,7 +167,6 @@ window.addEventListener("DOMContentLoaded", function () {
 ---------------------------
 ---------------------------
 */
-console.log(window.location.href)
 if (window.location.href == "http://localhost:5114/" || window.location.href == "http://comeb69-001-site1.btempurl.com/") {
     const categoryDropdownButton = $("categoryDropdown");
     const categoryDropdownMenu = $('categoryFilters');
@@ -299,6 +301,12 @@ if (window.location.href == "http://localhost:5114/Home/ListEvent" || window.loc
         }
     })
 }
+
+/* Follow errors function */
+var followAlert = function () {
+    customAlert.alert('You have to be connected to follow this User !', 'Warning', '<<div id = "dialogoverlay"></div><div id="dialogbox" class="slit-in-vertical"><div style="background-color: #1E0A3C"><div id="dialogboxhead"></div><div id="dialogboxbody"></div><div id="dialogboxfoot"></div></div></div>>', true);
+}
+
 
 
 
