@@ -258,7 +258,7 @@ h1 {
 
 .grid-item {
   border-radius: 10px;
-  height: 400px;
+  height: 415px;
   background-color: #fff;
   color: #000;
   background-size: 100% 100%;
@@ -277,6 +277,7 @@ h1 {
 }
 
 .grid-item h2 {
+  height: 60px;
   color: #1E0A3C;
   font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
 }
