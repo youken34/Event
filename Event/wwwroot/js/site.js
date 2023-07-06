@@ -157,7 +157,7 @@ var customAlert = new CustomAlert();
 
 window.addEventListener("DOMContentLoaded", function () {
     var url = window.location.href;
-    var expectedUrl = "http://comeb69-001-site1.btempurl.com/";
+    var expectedUrl = "http://comeb3469-001-site1.ftempurl.com/";
     if (url == expectedUrl) {
         customAlert.alert('This project is still in process, tasks I am currently working on:', 'Warning', '<div id = "dialogoverlay"></div><div id="dialogbox" class="slit-in-vertical"><div style="background-color: #1E0A3C"><div id="dialogboxhead"></div><div id="dialogboxbody"><ul><li>Responsive & overall design</li><li>Integrate Google Maps API to filter events based on distance and make predictions while adding new event\'s locations</li><li>Recommendation system</li><li>Miscelleanous improvements</li></ul></div><div id="dialogboxfoot"></div></div></div>', false);
     }
@@ -167,7 +167,7 @@ window.addEventListener("DOMContentLoaded", function () {
 ---------------------------
 ---------------------------
 */
-if (window.location.href == "http://localhost:5114/" || window.location.href == "http://comeb69-001-site1.btempurl.com/") {
+if (window.location.href == "http://localhost:5114/" || window.location.href == "http://comeb3469-001-site1.ftempurl.com/") {
     const categoryDropdownButton = $("categoryDropdown");
     const categoryDropdownMenu = $('categoryFilters');
 
@@ -328,7 +328,7 @@ function removeNoEvents() {
 }
 
 /* Error messages form */
-if (window.location.href == "http://localhost:5114/Home/ListEvent" || window.location.href == "http://comeb69-001-site1.btempurl.com/Home/ListEvent") {
+if (window.location.href == "http://localhost:5114/Home/ListEvent" || window.location.href == "http://comeb3469-001-site1.ftempurl.com/Home/ListEvent") {
     const title = $('title');
     const titleError = $('title-error');
     title.addEventListener('input', (event) => {
