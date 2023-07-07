@@ -723,6 +723,12 @@ footer a:hover {
   color: #258cfb;
 }
 
+@media screen and (max-width: 1400px) {
+  .grid-container {
+    grid-template-columns: repeat(3, 0fr);
+  }
+}
+
 @media (max-width: 768px) {
   html {
     font-size: 16px;
