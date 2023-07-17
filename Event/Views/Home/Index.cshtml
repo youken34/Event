@@ -21,6 +21,7 @@
     </div>
 
 <div class="filter-details align-items-center">
+  <svg class="cross" xmlns="http://www.w3.org/2000/svg" height="3em" viewBox="0 0 512 512"><path d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM175 175c9.4-9.4 24.6-9.4 33.9 0l47 47 47-47c9.4-9.4 24.6-9.4 33.9 0s9.4 24.6 0 33.9l-47 47 47 47c9.4 9.4 9.4 24.6 0 33.9s-24.6 9.4-33.9 0l-47-47-47 47c-9.4 9.4-24.6 9.4-33.9 0s-9.4-24.6 0-33.9l47-47-47-47c-9.4-9.4-9.4-24.6 0-33.9z"/></svg>
   <div class="filter-tag">
     <div class="dropdown" style="margin-bottom: -13px;">
       <button class="dropdown-toggle" type="button" id="categoryDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -69,32 +70,19 @@
     <div class="grid-container" id="grid-container">
     @foreach (var item in recentEvents)
     {
-                                <div class="grid-item @item.GetCategory().ToLower()" onload="applyBackground('@(item.GetCategory().ToLower())')">
-                                <img src="" alt="">
-                                <h2>@item.GetTitle()</h2>
-                                <p >@item.GetCategory()</p>
-                                <p>@item.GetLocation()</p>
-                                <p style="color: #0d4576;">@item.GetDate().ToString("ddd, MMM d, h:mm tt", new System.Globalization.CultureInfo("en-US"))</p>
-                                <a class="username" asp-controller="Event" asp-action="EventCreator" asp-route-eventid="@item.GetEventId()">@username[index]</a>
-                                <a asp-controller="Event" asp-action="Index" asp-route-id="@item.GetEventId()">See more</a>
-                            </div>
+                        <div class="grid-item @item.GetCategory().ToLower()" onload="applyBackground('@(item.GetCategory().ToLower())')">
+                        <img src="" alt="">
+                        <h2>@item.GetTitle()</h2>
+                        <p >@item.GetCategory()</p>
+                        <p>@item.GetLocation()</p>
+                        <p class="date" style="color: #0d4576;">@item.GetDate().ToString("ddd, MMM d, h:mm tt", new System.Globalization.CultureInfo("en-US"))</p>
+                        <a class="username" asp-controller="Event" asp-action="EventCreator" asp-route-eventid="@item.GetEventId()">@username[index]</a>
+                        <a asp-controller="Event" asp-action="Index" asp-route-id="@item.GetEventId()">See more</a>
+                    </div>
       {
         index++;
       }
 
     }
-
-    <script>
-  var jsList = @Html.Raw(jsonList);
-      jsList.forEach(function(item) {
-    // Access the properties of each item
-    var title = item.GetTitle();
-    var category = item.GetCategory();
-    var location = item.GetLocation();
-    var date = item.GetDate();
-    // Do something with the item data
-    console.log(title, category, location, date);
-  });
-</script>
     </div>
     </div>
