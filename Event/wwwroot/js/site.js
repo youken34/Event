@@ -348,6 +348,9 @@ var followAlert = function () {
 }
 
 
+/* Filter reponsive layout */
+
+
 
 
 
