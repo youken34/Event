@@ -181,6 +181,10 @@ header {
   top: 30px;
 }
 
+.cross:hover {
+  cursor: pointer;
+}
+
 /* Form style */
 form {
   margin: 20px auto;
@@ -739,6 +743,11 @@ footer a:hover {
 }
 
 @media screen and (max-width: 1520px) {
+
+  /* body {
+    overflow-y: hidden;
+  } */
+
   .filter-details {
     z-index: 2;
     bottom: 0px;
@@ -746,14 +755,41 @@ footer a:hover {
     height: 100%;
     top: 0px;
     transform: translateX(0px);
+    display: none;
+
   }
 
   .filter-tag {
     /* display: none; */
     height: 100%;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .filter-tag p:hover,
+  .filter-tag label:hover {
+    cursor: pointer;
+    border-bottom: none;
+  }
+
+  .dropdown-toggle {
+    display: none;
+  }
+
+  .dropdown-item {
+    border-bottom: 1px solid #000;
+    margin-inline: 10px;
+  }
+
+  .dropdown-item:hover {
+    border-bottom: 1px solid #258cfb;
   }
 
   .cross {
+    display: block;
+  }
+
+  #categoryFilters {
     display: block;
   }
 }
