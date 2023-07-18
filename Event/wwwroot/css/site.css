@@ -294,6 +294,7 @@ h1 {
 }
 
 .grid-item h2 {
+  width: 310px;
   height: 60px;
   color: #1E0A3C;
   font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
