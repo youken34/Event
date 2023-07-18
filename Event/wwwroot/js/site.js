@@ -40,10 +40,12 @@ var push = document.getElementById("push");
 var filterOn = false;
 var cross = document.getElementsByClassName("cross")[0]
 
-console.log(cross)
-cross.addEventListener("click", function () {
-    filterMenu()
-})
+if (cross != undefined) {
+    cross.addEventListener("click", function () {
+        filterMenu()
+    })
+}
+
 
 function filterMenuApparition() {
     push.style.transform = "translateX(-105px)";
