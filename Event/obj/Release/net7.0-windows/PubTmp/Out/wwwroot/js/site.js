@@ -38,10 +38,20 @@ if (icon != null) {
 var Menufilter = document.querySelector(".filter-details");
 var push = document.getElementById("push");
 var filterOn = false;
+var cross = document.getElementsByClassName("cross")[0]
+
+console.log(cross)
+cross.addEventListener("click", function () {
+    filterMenu()
+})
+
 function filterMenuApparition() {
     push.style.transform = "translateX(-105px)";
     Menufilter.style.transform = "translateX(0px)";
+
 }
+
+
 
 function removeFilterMenu() {
     Menufilter.style.transform = "translateX(200px)";
@@ -51,14 +61,39 @@ function removeFilterMenu() {
 
 function filterMenu() {
     if (filterOn == false) {
+        if (window.innerWidth < 1525) {
+            Menufilter.style.display = "flex"
+            window.document.body.style.overflowY = "hidden"
+        }
+        else {
+            filterMenuApparition();
+            window.document.body.style.overflowY = "visible"
 
-        filterMenuApparition();
+        }
     }
     else {
-        removeFilterMenu();
+        if (window.innerWidth < 1525) {
+            Menufilter.style.display = "none"
+        }
+        else {
+            removeFilterMenu();
+            window.document.body.style.overflowY = "visible"
+        }
     }
     filterOn = !filterOn;
 }
+
+window.addEventListener("resize", function () {
+    if (window.innerWidth < 1525) {
+        Menufilter.style.display = "none"
+    }
+    else {
+        Menufilter.style.display = "flex"
+        removeFilterMenu()
+        window.document.body.style.overflowY = "visible"
+    }
+    filterOn = false
+})
 
 /* Auto suggestion regarding the location */
 
@@ -346,6 +381,9 @@ if (window.location.href == "http://localhost:5114/Home/ListEvent" || window.loc
 var followAlert = function () {
     customAlert.alert('You have to be connected to follow this User !', 'Warning', '<<div id = "dialogoverlay"></div><div id="dialogbox" class="slit-in-vertical"><div style="background-color: #1E0A3C"><div id="dialogboxhead"></div><div id="dialogboxbody"></div><div id="dialogboxfoot"></div></div></div>>', true);
 }
+
+
+/* Filter reponsive layout */
 
 
 
