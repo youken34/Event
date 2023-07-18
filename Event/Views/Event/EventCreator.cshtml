@@ -63,7 +63,9 @@
      
   </div>
 </div>
- <div class="grid-container" style="grid-gap: 179px;">
+ <div class="grid-container" style="grid-template-columns: repeat(3, 1fr);
+    grid-gap: 179px;
+    flex-wrap: nowrap;">
     @foreach (var item in recommendation)
     {
               <div class="grid-item @item.GetCategory().ToLower()" onload="applyBackground('@(item.GetCategory().ToLower())')">
