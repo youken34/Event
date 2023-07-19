@@ -40,10 +40,12 @@ var push = document.getElementById("push");
 var filterOn = false;
 var cross = document.getElementsByClassName("cross")[0]
 
-console.log(cross)
-cross.addEventListener("click", function () {
-    filterMenu()
-})
+if (cross != undefined) {
+    cross.addEventListener("click", function () {
+        filterMenu()
+    })
+}
+
 
 function filterMenuApparition() {
     push.style.transform = "translateX(-105px)";
@@ -56,6 +58,7 @@ function filterMenuApparition() {
 function removeFilterMenu() {
     Menufilter.style.transform = "translateX(200px)";
     push.style.transform = "translateX(0px)";
+    console.log("test")
 
 }
 
@@ -63,37 +66,54 @@ function filterMenu() {
     if (filterOn == false) {
         if (window.innerWidth < 1525) {
             Menufilter.style.display = "flex"
+            Menufilter.style.transform = "translateX(0px)";
+            push.style.transform = "translateX(0px)";
             window.document.body.style.overflowY = "hidden"
         }
         else {
             filterMenuApparition();
-            window.document.body.style.overflowY = "visible"
-
         }
     }
     else {
         if (window.innerWidth < 1525) {
             Menufilter.style.display = "none"
+            window.document.body.style.overflowY = "visible"
         }
         else {
             removeFilterMenu();
-            window.document.body.style.overflowY = "visible"
         }
     }
     filterOn = !filterOn;
 }
+let previousScreenWidth = window.innerWidth; // Move the variable declaration to the global scope
 
-window.addEventListener("resize", function () {
-    if (window.innerWidth < 1525) {
-        Menufilter.style.display = "none"
+function processResize() {
+    const currentScreenWidth = window.innerWidth;
+
+    if (
+        (previousScreenWidth < 1525 && currentScreenWidth >= 1525) || // Screen went from below to above 1525px
+        (previousScreenWidth >= 1525 && currentScreenWidth < 1525) // Screen went from above to below 1525px
+    ) {
+        if (currentScreenWidth < 1525) {
+            // Screen is below 1525px
+            Menufilter.style.display = "none";
+            removeFilterMenu();
+        } else {
+            // Screen is above or equal to 1525px
+            Menufilter.style.display = "flex";
+            Menufilter.style.transform = "translateX(200px)";
+            window.document.body.style.overflowY = "visible";
+        }
+
+        filterOn = false;
     }
-    else {
-        Menufilter.style.display = "flex"
-        removeFilterMenu()
-        window.document.body.style.overflowY = "visible"
-    }
-    filterOn = false
-})
+
+    // Update the previousScreenWidth variable
+    previousScreenWidth = currentScreenWidth;
+}
+
+// Attach the event listener for the "resize" event
+window.addEventListener("resize", processResize);
 
 /* Auto suggestion regarding the location */
 
@@ -349,9 +369,8 @@ function createNoEvents() {
     noEvents.id = "noEvent"
     noEvents.style.width = "100%";
     noEvents.style.fontSize = "22px"
-    noEvents.style.position = "absolute"
+    noEvents.style.position = "relative"
     noEvents.style.justifyContent = "center";
-    noEvents.style.lineHeight = "0px";
     noEvents.style.fontFamily = "fantasy";
     noEvents.style.display = "flex";
     noEvents.textContent = 'There is no events available with the current filter(s), try to remove some';
