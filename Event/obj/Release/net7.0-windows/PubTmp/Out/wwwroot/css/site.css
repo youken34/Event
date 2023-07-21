@@ -389,6 +389,11 @@ h1 {
   left: 0;
 }
 
+.dropdown {
+  display: contents;
+  margin: 0 auto;
+}
+
 .dropdown-item {
   color: #fff;
 }
@@ -400,6 +405,11 @@ h1 {
 
 .dropdown-divider {
   background-color: #444;
+}
+
+#categoryDropdown {
+  width: 170px;
+
 }
 
 /* Single Event page style */
@@ -781,7 +791,7 @@ footer a:hover {
     border-bottom: none;
   }
 
-  .dropdown-toggle {
+  #categoryDropdown {
     display: none;
   }
 
